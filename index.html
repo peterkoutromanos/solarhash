@@ -40,11 +40,11 @@ header {
   border-bottom: 1px solid var(--border2);
   padding: 0 32px;
   display: flex; align-items: center; justify-content: space-between;
-  height: 56px;
+  height: 46px;
 }
 .logo { font-family: var(--display); font-size: 15px; font-weight: 800; letter-spacing: -0.02em; color: var(--text); }
 .logo span { color: var(--gold); }
-.header-stats { display: flex; gap: 32px; align-items: center; }
+.header-stats { display: flex; gap: 20px; align-items: center; }
 .hstat { display: flex; flex-direction: column; align-items: flex-end; }
 .hstat-label { font-size: 8px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
 .hstat-val { font-size: 14px; color: var(--gold); font-weight: 500; }
@@ -52,13 +52,13 @@ header {
 @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
 /* ── MAIN LAYOUT ── */
-.page { position: relative; z-index: 1; max-width: 1440px; margin: 0 auto; padding: 32px; }
+.page { position: relative; z-index: 1; max-width: 1440px; margin: 0 auto; padding: 16px 20px; }
 
 /* ── SECTION TITLE ── */
 .section-title {
   font-family: var(--display); font-size: 10px; font-weight: 700;
   letter-spacing: 4px; text-transform: uppercase; color: var(--muted);
-  margin-bottom: 16px; padding-bottom: 8px;
+  margin-bottom: 8px; padding-bottom: 5px;
   border-bottom: 1px solid var(--border);
   display: flex; align-items: center; gap: 12px;
 }
@@ -71,10 +71,10 @@ header {
   gap: 1px; background: var(--border);
   border: 1px solid var(--border);
   border-radius: 4px; overflow: hidden;
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 .input-cell {
-  background: var(--surface); padding: 16px 20px;
+  background: var(--surface); padding: 12px 16px;
   display: flex; flex-direction: column; gap: 8px;
   transition: background 0.15s;
 }
@@ -121,10 +121,10 @@ input[type=range]::-webkit-slider-thumb {
   gap: 1px; background: var(--border);
   border: 1px solid var(--border);
   border-radius: 4px; overflow: hidden;
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 .kpi {
-  background: var(--surface); padding: 20px;
+  background: var(--surface); padding: 14px 16px;
   display: flex; flex-direction: column; gap: 4px;
   position: relative; overflow: hidden;
 }
@@ -135,7 +135,7 @@ input[type=range]::-webkit-slider-thumb {
 }
 .kpi:hover::after { opacity: 1; }
 .kpi-label { font-size: 8px; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; }
-.kpi-val { font-family: var(--display); font-size: 26px; font-weight: 700; color: var(--text); line-height: 1; }
+.kpi-val { font-family: var(--display); font-size: 22px; font-weight: 700; color: var(--text); line-height: 1; }
 .kpi-val.gold { color: var(--gold); }
 .kpi-val.green { color: var(--green); }
 .kpi-val.red { color: var(--red); }
@@ -144,56 +144,25 @@ input[type=range]::-webkit-slider-thumb {
 /* ── CHARTS ROW ── */
 .charts-row {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 16px; margin-bottom: 32px;
+  gap: 12px; margin-bottom: 20px;
 }
 .chart-card {
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: 4px; padding: 20px; position: relative;
+  border-radius: 4px; padding: 14px 16px; position: relative;
 }
 .chart-title {
   font-size: 8px; letter-spacing: 2px; text-transform: uppercase;
-  color: var(--muted); margin-bottom: 16px;
-  display: flex; justify-content: space-between; align-items: center;
+  color: var(--muted); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
 }
 canvas { display: block; width: 100%; }
 
 /* ── HEATMAP ── */
 .heatmap-wrap { overflow-x: auto; }
 .heatmap-grid { display: inline-grid; gap: 2px; }
-.hm-cell {
-  width: 52px; height: 32px; border-radius: 2px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 9px; font-weight: 500; cursor: default;
-  transition: transform 0.1s, box-shadow 0.1s;
-  font-family: var(--mono);
-}
-.hm-cell:hover { transform: scale(1.1); z-index: 10; box-shadow: 0 4px 16px rgba(0,0,0,0.6); }
-.hm-header {
-  width: 52px; height: 20px; display: flex; align-items: center;
-  justify-content: center; font-size: 7px; color: var(--muted); letter-spacing: 1px;
-}
-.hm-row-label {
-  width: 40px; height: 32px; display: flex; align-items: center;
-  justify-content: flex-end; padding-right: 6px;
-  font-size: 8px; color: var(--muted);
-}
 
 /* ── SENSITIVITY TABLE ── */
-.sens-table { width: 100%; border-collapse: collapse; font-size: 11px; }
-.sens-table th {
-  font-size: 8px; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--muted); padding: 8px 12px; text-align: right;
-  border-bottom: 1px solid var(--border); font-weight: 400;
-}
-.sens-table th:first-child { text-align: left; }
-.sens-table td { padding: 9px 12px; text-align: right; border-bottom: 1px solid var(--border); }
-.sens-table td:first-child { text-align: left; color: var(--muted); font-size: 10px; }
-.sens-table tr:last-child td { border-bottom: none; }
-.sens-table tr:hover td { background: var(--surface2); }
-.tag { display: inline-block; padding: 2px 6px; border-radius: 2px; font-size: 8px; }
-.tag.green { background: rgba(0,212,170,0.15); color: var(--green); }
-.tag.gold  { background: rgba(240,160,32,0.15); color: var(--gold); }
-.tag.red   { background: rgba(255,77,109,0.15); color: var(--red); }
+
 
 /* ── ASSUMPTION FOOTER ── */
 .assumptions {
@@ -202,7 +171,7 @@ canvas { display: block; width: 100%; }
   border: 1px solid var(--border); border-radius: 4px;
   overflow: hidden; margin-top: 32px;
 }
-.assumption { background: var(--surface); padding: 14px 18px; }
+.assumption { background: var(--surface); padding: 10px 14px; }
 .assumption-label { font-size: 8px; letter-spacing: 1.5px; color: var(--muted); text-transform: uppercase; margin-bottom: 4px; }
 .assumption-val { font-size: 13px; color: var(--dim); }
 
@@ -242,13 +211,31 @@ canvas { display: block; width: 100%; }
 <div class="page">
 
   <!-- ── INPUTS ── -->
-  <div class="section-title">Project Parameters</div>
+  <div class="section-title" style="display:flex;align-items:center;justify-content:space-between">
+    <span>Project Parameters</span>
+    <div style="display:flex;gap:8px">
+      <button onclick="resetDefaults()" style="
+        font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;
+        padding:5px 12px;border-radius:2px;cursor:pointer;
+        background:transparent;color:var(--muted);border:1px solid var(--border2);
+        transition:all 0.15s;
+      " onmouseover="this.style.color='var(--text)';this.style.borderColor='var(--text)'"
+         onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border2)'">↺ Reset</button>
+      <button onclick="saveDefaults()" style="
+        font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;
+        padding:5px 12px;border-radius:2px;cursor:pointer;
+        background:transparent;color:var(--gold);border:1px solid var(--gold);
+        transition:all 0.15s;
+      " onmouseover="this.style.background='rgba(240,160,32,0.15)'"
+         onmouseout="this.style.background='transparent'">⊙ Save as Default</button>
+    </div>
+  </div>
   <div class="input-grid">
 
     <div class="input-cell">
       <div class="input-label">BTC Price (USD)</div>
       <div class="input-row">
-        <input type="number" id="btcPrice" value="83000" min="10000" max="500000" step="1000" oninput="recalc()">
+        <input type="text" inputmode="numeric" id="btcPrice" value="83 000" min="10000" max="500000" step="1000" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
         <span class="input-unit">USD</span>
       </div>
       <div style="font-size:8px;color:var(--muted);margin-top:4px">⟳ Live · Supabase proxy · 60s</div>
@@ -257,7 +244,7 @@ canvas { display: block; width: 100%; }
     <div class="input-cell">
       <div class="input-label">ZAR / USD</div>
       <div class="input-row">
-        <input type="number" id="zarRate" value="18.50" min="10" max="40" step="0.1" oninput="recalc()">
+        <input type="text" inputmode="numeric" id="zarRate" value="18.50" min="10" max="40" step="0.1" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
         <span class="input-unit">R/USD</span>
       </div>
       <div style="font-size:8px;color:var(--muted);margin-top:4px">⟳ Live · Supabase proxy · 60s</div>
@@ -266,10 +253,10 @@ canvas { display: block; width: 100%; }
     <div class="input-cell">
       <div class="input-label">Number of S23 Miners</div>
       <div class="input-row">
-        <input type="number" id="nMiners" value="30" min="1" max="300" step="1" oninput="recalc()">
+        <input type="text" inputmode="numeric" id="nMiners" value="30" min="1" max="300" step="1" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
         <span class="input-unit">units</span>
       </div>
-      <div style="margin-top:8px">
+      <div style="margin-top:4px">
         <button onclick="autoSetMiners()" style="
           font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;
           padding:4px 10px;border-radius:2px;cursor:pointer;
@@ -284,7 +271,7 @@ canvas { display: block; width: 100%; }
     <div class="input-cell">
       <div class="input-label">Cost per Miner (landed)</div>
       <div class="input-row">
-        <input type="number" id="minerCost" value="250000" min="50000" max="2000000" step="10000" oninput="recalc()">
+        <input type="text" inputmode="numeric" id="minerCost" value="250 000" min="50000" max="2000000" step="10000" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
         <span class="input-unit">ZAR</span>
       </div>
     </div>
@@ -292,7 +279,7 @@ canvas { display: block; width: 100%; }
     <div class="input-cell">
       <div class="input-label">Solar Plant Capex</div>
       <div class="input-row">
-        <input type="number" id="solarCapex" value="8500000" min="1000000" max="50000000" step="100000" oninput="recalc()">
+        <input type="text" inputmode="numeric" id="solarCapex" value="8 500 000" min="1000000" max="50000000" step="100000" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
         <span class="input-unit">ZAR</span>
       </div>
       <div style="font-size:9px;color:var(--muted)">1700 × Aiko 650W · R5/W installed</div>
@@ -301,7 +288,7 @@ canvas { display: block; width: 100%; }
     <div class="input-cell">
       <div class="input-label">Infrastructure Capex</div>
       <div class="input-row">
-        <input type="number" id="infraCapex" value="3200000" min="0" max="20000000" step="100000" oninput="recalc()">
+        <input type="text" inputmode="numeric" id="infraCapex" value="3 200 000" min="0" max="20000000" step="100000" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
         <span class="input-unit">ZAR</span>
       </div>
       <div style="font-size:9px;color:var(--muted)">Cooling · racks · wiring · civil</div>
@@ -310,7 +297,7 @@ canvas { display: block; width: 100%; }
     <div class="input-cell">
       <div class="input-label">Monthly Opex</div>
       <div class="input-row">
-        <input type="number" id="monthlyOpex" value="45000" min="0" max="500000" step="1000" oninput="recalc()">
+        <input type="text" inputmode="numeric" id="monthlyOpex" value="45 000" min="0" max="500000" step="1000" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
         <span class="input-unit">ZAR/month</span>
       </div>
     </div>
@@ -318,40 +305,71 @@ canvas { display: block; width: 100%; }
     <div class="input-cell">
       <div class="input-label">System Efficiency</div>
       <div class="input-row">
-        <input type="number" id="sysEff" value="88" min="70" max="99" step="1" oninput="recalc()">
+        <input type="text" inputmode="numeric" id="sysEff" value="88" min="70" max="99" step="1" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
         <span class="input-unit">%</span>
       </div>
     </div>
 
-    <div class="input-cell wide">
-      <div class="input-label">BTC Difficulty Growth · Annual</div>
-      <div style="display:flex;align-items:center;gap:16px">
-        <span class="range-val" id="diffVal">40%</span>
-        <div style="flex:1">
-          <input type="range" id="diffGrowth" min="0" max="100" value="40" step="5" oninput="updateRange(this,'diffVal','%');recalc()">
-          <div class="range-labels"><span>0%</span><span>50%</span><span>100%</span></div>
-        </div>
+    <div class="input-cell" style="grid-column:span 4">
+      <div class="input-label" style="display:flex;justify-content:space-between">
+        <span>BTC vs Difficulty · Net Annual Spread</span>
+        <span id="netSpreadNote" style="color:var(--muted);font-size:8px;letter-spacing:1px"></span>
       </div>
-    </div>
-
-    <div class="input-cell wide">
-      <div class="input-label">BTC Price Growth · Annual</div>
-      <div style="display:flex;align-items:center;gap:16px">
-        <span class="range-val" id="btcGrowthVal">20%</span>
+      <div style="display:flex;align-items:center;gap:20px;margin-top:4px">
+        <div style="text-align:center;min-width:72px">
+          <div style="font-size:8px;color:var(--red);letter-spacing:1px;margin-bottom:2px">DIFF WINS</div>
+          <div style="font-size:9px;color:var(--muted)">miners squeezed</div>
+        </div>
         <div style="flex:1">
-          <input type="range" id="btcGrowth" min="0" max="100" value="20" step="5" oninput="updateRange(this,'btcGrowthVal','%');recalc()">
-          <div class="range-labels"><span>0%</span><span>50%</span><span>100%</span></div>
+          <input type="range" id="netSpread" min="-60" max="60" value="0" step="5"
+            oninput="updateNetSpread(this);recalc()"
+            style="background:linear-gradient(to right, var(--red) 0%, var(--dim) 50%, var(--green) 100%)">
+          <div style="display:flex;justify-content:space-between;font-size:8px;color:var(--muted);margin-top:4px">
+            <span>-60%</span><span style="color:var(--text)">0 · balanced</span><span>+60%</span>
+          </div>
+        </div>
+        <div style="text-align:center;min-width:72px">
+          <div style="font-size:8px;color:var(--green);letter-spacing:1px;margin-bottom:2px">BTC WINS</div>
+          <div style="font-size:9px;color:var(--muted)">margins expand</div>
+        </div>
+        <div style="background:var(--surface2);padding:10px 16px;border-radius:2px;min-width:140px;border-left:2px solid var(--border2)">
+          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:2px">SPREAD</div>
+          <div style="font-size:22px;font-family:var(--mono)" id="spreadDisplay">-20%</div>
+          <div style="font-size:8px;color:var(--muted);margin-top:4px">
+            BTC <span id="spreadBtcG" style="color:var(--green)">+20%</span> ·
+            Diff <span id="spreadDiffG" style="color:var(--red)">+40%</span>
+          </div>
         </div>
       </div>
     </div>
 
   </div>
 
+  <!-- ── FIXED ASSUMPTIONS ── -->
+  <div class="assumptions" style="margin-bottom:14px">
+    <div class="assumption">
+      <div class="assumption-label">Solar Plant</div>
+      <div class="assumption-val">1,700 × Aiko 650W · 1,105 kWp · 1,050 kW AC · PSH 5.4h · Sandton</div>
+    </div>
+    <div class="assumption">
+      <div class="assumption-label">Miner Spec</div>
+      <div class="assumption-val">S23 Standard · 1,160 TH/s · 11.02 kW · 9.5 J/TH · R250k landed</div>
+    </div>
+    <div class="assumption">
+      <div class="assumption-label">Revenue Model</div>
+      <div class="assumption-val" id="revenueModelNote">Solar-only hours · no grid mining</div>
+    </div>
+    <div class="assumption">
+      <div class="assumption-label">IRR Method</div>
+      <div class="assumption-val">10-year · 6% ZAR depreciation · no terminal value</div>
+    </div>
+  </div>
+
   <!-- ── GRID MINING BANNER ── -->
   <div id="gridBanner" style="
-    display:flex; align-items:center; gap:24px; flex-wrap:wrap;
+    display:flex; align-items:center; gap:16px; flex-wrap:wrap;
     background:var(--surface); border:1px solid var(--border);
-    border-radius:4px; padding:18px 24px; margin-bottom:32px;
+    border-radius:4px; padding:12px 18px; margin-bottom:16px;
     border-left:3px solid var(--dim); transition:border-color 0.3s;
   ">
     <!-- Toggle -->
@@ -382,7 +400,7 @@ canvas { display: block; width: 100%; }
     <div id="gridRateCell" style="opacity:0.35;pointer-events:none;transition:opacity 0.25s">
       <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">City Power Off-Peak Rate</div>
       <div style="display:flex;align-items:baseline;gap:8px">
-        <input type="number" id="gridRate" value="1.97" min="0.50" max="5.00" step="0.01" oninput="recalc()"
+        <input type="text" inputmode="numeric" id="gridRate" value="1.97" min="0.50" max="5.00" step="0.01" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)"
           style="font-size:26px;font-family:var(--mono);background:transparent;border:none;border-bottom:1px solid var(--dim);color:var(--text);outline:none;width:90px;padding-bottom:2px;-moz-appearance:textfield">
         <span style="font-size:11px;color:var(--muted)">R/kWh incl VAT</span>
       </div>
@@ -401,9 +419,9 @@ canvas { display: block; width: 100%; }
 
   <!-- ── BATTERY BANNER ── -->
   <div id="battBanner" style="
-    display:flex; align-items:center; gap:24px; flex-wrap:wrap;
+    display:flex; align-items:center; gap:16px; flex-wrap:wrap;
     background:var(--surface); border:1px solid var(--border);
-    border-radius:4px; padding:18px 24px; margin-bottom:32px;
+    border-radius:4px; padding:12px 18px; margin-bottom:16px;
     border-left:3px solid var(--dim); transition:border-color 0.3s;
   ">
     <!-- Toggle -->
@@ -492,47 +510,152 @@ canvas { display: block; width: 100%; }
     </div>
   </div>
 
+  <!-- ── THREE STREAMS ── -->
+  <div class="section-title">Solar Monetisation · Three Revenue Streams</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1px 1fr;gap:0;margin-bottom:32px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden">
+
+    <!-- Stream 1: Displacement -->
+    <div style="background:var(--surface);padding:14px 18px">
+      <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Stream 1 · Always On</div>
+      <div style="font-family:var(--display);font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">Displace Grid</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.6">Solar covers warehouse electricity during daylight hours. Saves peak + standard tariff costs directly off the bill.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+        <div style="background:var(--surface2);padding:10px 12px;border-radius:2px">
+          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px">ANNUAL SAVING</div>
+          <div style="font-family:var(--display);font-size:18px;color:var(--green);font-weight:700" id="s1Annual">—</div>
+        </div>
+        <div style="background:var(--surface2);padding:10px 12px;border-radius:2px">
+          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px">TYPE</div>
+          <div style="font-size:11px;color:var(--text);margin-top:3px">Bill saving<br>Guaranteed</div>
+        </div>
+      </div>
+      <div style="font-size:8px;color:var(--muted);border-top:1px solid var(--border);padding-top:10px">
+        30 kW warehouse · peak R3.40 + std R2.56 displaced · ~3% of plant capacity
+      </div>
+    </div>
+
+    <!-- Stream 2: SSEG -->
+    <div style="background:var(--surface);padding:14px 18px;border-left:1px solid var(--border)">
+      <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Stream 2 · Limited</div>
+      <div style="font-family:var(--display);font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">Sell Back (SSEG)</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.6">Net metering bill credit via City Power SSEG. Capped at your own consumption — cannot earn cash for excess solar.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+        <div style="background:var(--surface2);padding:10px 12px;border-radius:2px">
+          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px">ANNUAL CREDIT</div>
+          <div style="font-family:var(--display);font-size:18px;color:#f0a020;font-weight:700" id="s2Annual">—</div>
+        </div>
+        <div style="background:var(--surface2);padding:10px 12px;border-radius:2px">
+          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px">TYPE</div>
+          <div style="font-size:11px;color:var(--text);margin-top:3px">Bill credit<br>Not cash</div>
+        </div>
+      </div>
+      <div style="font-size:8px;color:var(--muted);border-top:1px solid var(--border);padding-top:10px">
+        87% of plant output has nowhere to go · wholesale WEPS rate only · complex City Power approval
+      </div>
+    </div>
+
+    <!-- Stream 3: Mining -->
+    <div style="background:var(--surface);padding:14px 18px;border-left:1px solid var(--border)">
+      <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Stream 3 · Primary</div>
+      <div style="font-family:var(--display);font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">Bitcoin Mining</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.6">Miners consume all surplus solar the warehouse doesn't need. Converts excess kWh directly to BTC at full plant capacity.</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
+        <div style="background:var(--surface2);padding:10px 12px;border-radius:2px">
+          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px">ANNUAL NET</div>
+          <div style="font-family:var(--display);font-size:18px;color:var(--green);font-weight:700" id="s3Annual">—</div>
+        </div>
+        <div style="background:var(--surface2);padding:10px 12px;border-radius:2px">
+          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px">TYPE</div>
+          <div style="font-size:11px;color:var(--text);margin-top:3px">Cash revenue<br>BTC price risk</div>
+        </div>
+      </div>
+      <div style="font-size:8px;color:var(--muted);border-top:1px solid var(--border);padding-top:10px">
+        ~97% of plant capacity · solar hours only · uses dashboard miner count
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div style="background:var(--border)"></div>
+
+    <!-- Combined total -->
+    <div style="background:var(--surface2);padding:14px 18px">
+      <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Combined · All Streams</div>
+      <div style="font-family:var(--display);font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px">Total Return</div>
+
+      <div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+          <span style="font-size:9px;color:var(--muted)">Displacement</span>
+          <span style="font-size:13px;color:var(--green)" id="s1Bar">—</span>
+        </div>
+        <div style="height:4px;background:var(--dim);border-radius:2px;margin-bottom:10px">
+          <div id="s1BarFill" style="height:4px;background:var(--green);border-radius:2px;width:0%;transition:width 0.4s"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+          <span style="font-size:9px;color:var(--muted)">SSEG credit</span>
+          <span style="font-size:13px;color:#f0a020" id="s2Bar">—</span>
+        </div>
+        <div style="height:4px;background:var(--dim);border-radius:2px;margin-bottom:10px">
+          <div id="s2BarFill" style="height:4px;background:#f0a020;border-radius:2px;width:0%;transition:width 0.4s"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+          <span style="font-size:9px;color:var(--muted)">Bitcoin mining</span>
+          <span style="font-size:13px;color:var(--green)" id="s3Bar">—</span>
+        </div>
+        <div style="height:4px;background:var(--dim);border-radius:2px;margin-bottom:16px">
+          <div id="s3BarFill" style="height:4px;background:var(--green);border-radius:2px;width:0%;transition:width 0.4s"></div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--border2);padding-top:14px">
+        <div style="font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Total Annual</div>
+        <div style="font-family:var(--display);font-size:28px;font-weight:800;color:var(--gold)" id="sTotalAnnual">—</div>
+        <div style="font-size:9px;color:var(--muted);margin-top:6px">Solar payback: <span id="sSolarPayback" style="color:var(--text)">—</span></div>
+      </div>
+    </div>
+
+  </div>
+
   <!-- ── CHARTS A · B · C ── -->
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:32px">
     <div class="chart-card">
       <div class="chart-title">
-        <span>Annual Cash Flow · 10 Years</span>
-        <span id="cashflowNote" style="font-size:9px;color:var(--green)"></span>
+        <span style="color:var(--red);font-size:8px;letter-spacing:1.5px;font-weight:500">A</span>
+        <span>Annual Cash Flow · 10yr</span>
+        <span id="cashflowNote" style="font-size:9px;color:var(--green);margin-left:auto"></span>
       </div>
-      <span style="font-family:var(--mono);font-size:8px;color:rgba(255,255,255,0.45);letter-spacing:1.5px;position:absolute;top:4px;left:6px;z-index:10;pointer-events:none">Chart A · Annual Cash Flow</span><canvas id="cashflowCanvas" height="220"></canvas>
+      <canvas id="cashflowCanvas" height="200"></canvas>
     </div>
     <div class="chart-card">
       <div class="chart-title">
-        <span>Cumulative Return on Capex</span>
-        <span id="roiNote" style="font-size:9px;color:var(--gold)"></span>
+        <span style="color:var(--red);font-size:8px;letter-spacing:1.5px;font-weight:500">B</span>
+        <span>Cumulative Return</span>
+        <span id="roiNote" style="font-size:9px;color:var(--gold);margin-left:auto"></span>
       </div>
-      <span style="font-family:var(--mono);font-size:8px;color:rgba(255,255,255,0.45);letter-spacing:1.5px;position:absolute;top:4px;left:6px;z-index:10;pointer-events:none">Chart B · Cumulative Return</span><canvas id="roiCanvas" height="220"></canvas>
+      <canvas id="roiCanvas" height="200"></canvas>
     </div>
     <div class="chart-card">
       <div class="chart-title">
+        <span style="color:var(--red);font-size:8px;letter-spacing:1.5px;font-weight:500">C</span>
         <span>Daily Energy Balance</span>
-        <span id="energyBarNote" style="font-size:9px;color:var(--muted)">kWh / day</span>
+        <span id="energyBarNote" style="font-size:9px;color:var(--muted);margin-left:auto"></span>
       </div>
-      <span style="font-family:var(--mono);font-size:8px;color:rgba(255,255,255,0.45);letter-spacing:1.5px;position:absolute;top:4px;left:6px;z-index:10;pointer-events:none">Chart C · Daily Energy Balance</span><canvas id="energyBarCanvas" height="220"></canvas>
+      <canvas id="energyBarCanvas" height="200"></canvas>
     </div>
   </div>
 
   <!-- ── IRR HEATMAP ── -->
-  <div class="section-title">IRR Heatmap · Difficulty Growth vs BTC Price Growth</div>
-  <div style="margin-bottom:32px">
-    <div class="chart-card">
-      <div style="font-family:var(--mono);font-size:8px;color:rgba(255,255,255,0.45);letter-spacing:1.5px;margin-bottom:8px">Chart D · IRR Heatmap</div>
-      <div id="heatmapWrap"></div>
-    </div>
-  </div>
+
 
   <!-- ── TOU WEEKLY SCHEDULE ── -->
   <div class="section-title">City Power TOU Schedule · Weekly</div>
-  <div class="chart-card" style="margin-bottom:32px">
-    <div style="font-family:var(--mono);font-size:8px;color:rgba(255,255,255,0.45);letter-spacing:1.5px;margin-bottom:16px">Chart E · City Power TOU Weekly Schedule</div>
+  <div class="chart-card" style="margin-bottom:8px">
+    <div class="chart-title" style="margin-bottom:16px">
+      <span style="color:var(--red);font-size:8px;letter-spacing:1.5px;font-weight:500">E</span>
+      <span>City Power TOU · Weekly</span>
+    </div>
 
     <!-- Season toggle -->
-    <div style="display:flex;gap:8px;margin-bottom:16px">
+    <div style="display:flex;gap:6px;margin-bottom:10px">
       <button id="btnSummer" onclick="setTOUSeason('summer')" style="
         font-family:var(--mono);font-size:9px;letter-spacing:1px;
         padding:5px 14px;border-radius:2px;cursor:pointer;
@@ -571,26 +694,6 @@ canvas { display: block; width: 100%; }
 
     <!-- Rate summary row -->
     <div id="touRates" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:2px;margin-top:16px;overflow:hidden"></div>
-  </div>
-
-  <!-- ── SCENARIO ANALYSIS ── -->
-  <div class="section-title">Scenario Analysis</div>
-  <div class="chart-card" style="margin-bottom:32px">
-    <table class="sens-table" id="sensTable">
-      <thead>
-        <tr>
-          <th>Scenario</th>
-          <th>BTC CAGR</th>
-          <th>Diff CAGR</th>
-          <th>Y1 Revenue</th>
-          <th>Payback</th>
-          <th>10Y IRR</th>
-          <th>10Y Net</th>
-          <th>Rating</th>
-        </tr>
-      </thead>
-      <tbody id="sensBody"></tbody>
-    </table>
   </div>
 
   <!-- ── ASSUMPTIONS ── -->
@@ -779,11 +882,28 @@ function buildCashflows(n, btc, zar, btcG, diffG, opexMon, solarCap, infraCap, m
 }
 
 // ── FORMATTERS ───────────────────────────────────────────────────
-const fM  = v => 'R\u00a0' + (Math.abs(v) >= 1e6 ? (v/1e6).toFixed(2)+'M' : Math.round(v).toLocaleString('en-ZA'));
+const fM  = v => (v < 0 ? '-' : '') + 'R\u00a0' + (Math.abs(v) >= 1e6 ? (Math.abs(v)/1e6).toFixed(2)+'M' : Math.round(Math.abs(v)).toLocaleString('en-ZA'));
 const fPct= v => (v*100).toFixed(1)+'%';
 const fNum= v => v.toLocaleString('en-ZA');
 
 // ── RANGE UPDATER ────────────────────────────────────────────────
+function updateNetSpread(el) {
+  const spread = +el.value;
+  const BASE_DIFF = 0.40;
+  const diffG  = BASE_DIFF;
+  const btcG   = Math.max(0, BASE_DIFF + spread / 100);
+  const sign   = spread >= 0 ? '+' : '';
+  document.getElementById('spreadDisplay').textContent = sign + spread + '%';
+  document.getElementById('spreadDisplay').style.color = spread >= 0 ? 'var(--green)' : 'var(--red)';
+  document.getElementById('spreadBtcG').textContent  = '+' + Math.round(btcG*100) + '%';
+  document.getElementById('spreadDiffG').textContent = '+' + Math.round(diffG*100) + '%';
+  document.getElementById('netSpreadNote').textContent =
+    'BTC ' + (btcG >= diffG ? 'outpacing' : 'lagging') + ' difficulty by ' + Math.abs(spread) + '%/yr';
+  // Update range track colour
+  const pct = (el.value - el.min) / (el.max - el.min) * 100;
+  el.style.setProperty('--pct', pct + '%');
+}
+
 function updateRange(el, valId, suffix) {
   document.getElementById(valId).textContent = el.value + suffix;
   const pct = (el.value - el.min) / (el.max - el.min) * 100;
@@ -792,17 +912,22 @@ function updateRange(el, valId, suffix) {
 
 // ── MAIN RECALC ──────────────────────────────────────────────────
 function recalc() {
-  const btc       = +document.getElementById('btcPrice').value   || 83000;
-  const zar       = +document.getElementById('zarRate').value    || 18.5;
-  const n         = +document.getElementById('nMiners').value    || 30;
-  const minerCost = +document.getElementById('minerCost').value  || 250000;
-  const solarCap  = +document.getElementById('solarCapex').value || 8500000;
-  const infraCap  = +document.getElementById('infraCapex').value || 3200000;
-  const opexMon   = +document.getElementById('monthlyOpex').value|| 45000;
-  const sysEff    = +document.getElementById('sysEff').value     || 88;
-  const btcG      = (+document.getElementById('btcGrowth').value || 20) / 100;
-  const diffG     = (+document.getElementById('diffGrowth').value|| 40) / 100;
-  const gridRate  = +document.getElementById('gridRate').value   || 1.97;
+  const btc       = +(document.getElementById('btcPrice').value.replace(/[\s,]/g,'')) || 83000;
+  const zar       = +(document.getElementById('zarRate').value.replace(/[\s,]/g,'')) || 18.5;
+  const n         = +(document.getElementById('nMiners').value.replace(/[\s,]/g,'')) || 30;
+  const minerCost = +(document.getElementById('minerCost').value.replace(/[\s,]/g,'')) || 250000;
+  const solarCap  = +(document.getElementById('solarCapex').value.replace(/[\s,]/g,'')) || 8500000;
+  const infraCap  = +(document.getElementById('infraCapex').value.replace(/[\s,]/g,'')) || 3200000;
+  const opexMon   = +(document.getElementById('monthlyOpex').value.replace(/[\s,]/g,'')) || 45000;
+  const sysEff    = +(document.getElementById('sysEff').value.replace(/[\s,]/g,'')) || 88;
+  const spread    = +(document.getElementById('netSpread').value) || 0;
+  // Decompose spread into btcG and diffG
+  // Convention: base difficulty = 40%, BTC = difficulty + spread
+  // This keeps difficulty realistic while moving BTC up/down with the slider
+  const BASE_DIFF = 0.40;
+  const diffG     = BASE_DIFF;
+  const btcG      = Math.max(0, BASE_DIFF + spread / 100);
+  const gridRate  = +(document.getElementById('gridRate').value.replace(/[\s,]/g,'')) || 1.97;
 
   // Update header
   document.getElementById('hBtc').textContent = '$' + btc.toLocaleString();
@@ -855,7 +980,7 @@ function recalc() {
   if (battNoteEl && batteryOn) {
     const extraHrs = yr1Data.battMH / n;
     const extraRevDay = yr1Data.battMH * (MINER_HASH * REV_PER_TH_BASE * btc * UPTIME / 24) * zar;
-    battNoteEl.textContent = `✓ Active — ${extraHrs.toFixed(1)}h extra/day · +R${Math.round(extraRevDay).toLocaleString('en-ZA')}/day · R${Math.round(extraRevDay*365/1000)}k/year additional revenue · R1.6M capex included`;
+    battNoteEl.textContent = `✓ Active — ${extraHrs.toFixed(1)}h extra/day · +R${Math.round(extraRevDay).toLocaleString('en-ZA')}/day · R${Math.round(extraRevDay*365/1000).toLocaleString('en-ZA')}k/year additional revenue · R1.6M capex included`;
     battNoteEl.style.color = 'var(--blue)';
   }
   const noteEl = document.getElementById('revenueModelNote');
@@ -871,8 +996,7 @@ function recalc() {
   drawCashflow(cfs, totalCapex);
   drawROI(cfs, totalCapex);
   drawEnergyBar(n, btc, zar, gridMiningOn, gridRate, batteryOn);
-  drawHeatmap(n, btc, zar, opexMon, solarCap, infraCap, minerCost, gridMiningOn, gridRate, batteryOn);
-  drawSensTable(n, btc, zar, opexMon, solarCap, infraCap, minerCost, totalCapex, yr1Rev, gridMiningOn, gridRate, batteryOn);
+  calcThreeStreams(n, btc, zar, opexMon);
 }
 
 // ── CASHFLOW CHART ───────────────────────────────────────────────
@@ -887,11 +1011,11 @@ function drawCashflow(cfs, capex) {
   const annual = cfs.slice(1); // year 1-10
   const maxV   = Math.max(...annual);
   const minV   = Math.min(...annual, 0);
-  const PAD    = {top:20, right:20, bottom:30, left:70};
+  const PAD    = {top:20, right:8, bottom:24, left:54};
   const cW = W - PAD.left - PAD.right;
   const cH = H - PAD.top - PAD.bottom;
   const n  = annual.length;
-  const barW = cW / n * 0.65;
+  const barW = cW / n * 0.7;
 
   ctx.fillStyle = '#0e1318'; ctx.fillRect(0,0,W,H);
 
@@ -901,9 +1025,9 @@ function drawCashflow(cfs, capex) {
     const v  = minV + (maxV - minV) * f;
     const y  = PAD.top + cH - (v - minV) / (maxV - minV) * cH;
     ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(PAD.left + cW, y); ctx.stroke();
-    ctx.fillStyle = 'rgba(180,210,230,0.85)'; ctx.font = `9px 'DM Mono'`;
+    ctx.fillStyle = 'rgba(180,210,230,0.8)'; ctx.font = `8px 'DM Mono'`;
     ctx.textAlign = 'right';
-    ctx.fillText((Math.abs(v)>=1e6?(v/1e6).toFixed(1)+'M':Math.round(v/1000)+'k'), PAD.left-6, y+3);
+    ctx.fillText((Math.abs(v)>=1e6?(v/1e6).toFixed(1)+'M':(Math.round(v/1000)).toLocaleString('en-ZA')+'k'), PAD.left-4, y+3);
   });
 
   // Bars
@@ -916,7 +1040,9 @@ function drawCashflow(cfs, capex) {
     ctx.fillRect(x, Math.min(yV, y0), barW, bH);
     ctx.fillStyle = 'rgba(180,210,230,0.9)'; ctx.font = `8px 'DM Mono'`;
     ctx.textAlign = 'center';
-    ctx.fillText('Y'+(i+1), x + barW/2, H - 8);
+    ctx.fillStyle = 'rgba(180,210,230,0.7)'; ctx.font = `8px 'DM Mono'`;
+    ctx.textAlign = 'center';
+    ctx.fillText('Y'+(i+1), x + barW/2, H - 6);
   });
 
   // Zero line
@@ -927,7 +1053,7 @@ function drawCashflow(cfs, capex) {
   ctx.setLineDash([]);
 
   document.getElementById('cashflowNote').textContent =
-    'Y1 net: ' + (annual[0]>=0?'+':'') + (annual[0]/1e6).toFixed(2)+'M';
+    'Y1 net: ' + (annual[0]>=0?'+':'') + (annual[0]/1e6).toFixed(2)+'M  ·  peak Y'+annual.reduce((mi,v,i,a)=>v>a[mi]?i:mi,0+1)+' R'+(Math.max(...annual)/1e6).toFixed(2)+'M';
 }
 
 // ── ROI / CUMULATIVE CHART ───────────────────────────────────────
@@ -946,7 +1072,7 @@ function drawROI(cfs, capex) {
 
   const maxV = Math.max(...cum);
   const minV = Math.min(...cum);
-  const PAD  = {top:20, right:20, bottom:30, left:70};
+  const PAD  = {top:20, right:8, bottom:24, left:54};
   const cW   = W - PAD.left - PAD.right;
   const cH   = H - PAD.top - PAD.bottom;
 
@@ -997,7 +1123,8 @@ function drawROI(cfs, capex) {
     ctx.fillStyle = v >= 0 ? '#00d4aa' : '#ff4d6d'; ctx.fill();
     ctx.fillStyle = 'rgba(180,210,230,0.9)'; ctx.font = `8px 'DM Mono'`;
     ctx.textAlign = 'center';
-    ctx.fillText(i === 0 ? 'Y0' : 'Y'+i, xOf(i), H-8);
+    ctx.fillStyle = 'rgba(180,210,230,0.7)'; ctx.font = `8px 'DM Mono'`; ctx.textAlign = 'center';
+    if (i % 2 === 0) ctx.fillText(i === 0 ? 'Y0' : 'Y'+i, xOf(i), H-6);
   });
 
   // Breakeven annotation
@@ -1013,14 +1140,14 @@ function drawROI(cfs, capex) {
   }
 
   document.getElementById('roiNote').textContent =
-    'Y10: ' + (cum[cum.length-1]>=0?'+':'') + (cum[cum.length-1]/1e6).toFixed(2)+'M';
+    'Y10 cumulative: ' + (cum[cum.length-1]>=0?'+':'') + (cum[cum.length-1]/1e6).toFixed(2)+'M';
 }
 
 // ── ENERGY BAR CHART ─────────────────────────────────────────────
 function drawEnergyBar(n, btc, zar, gridOn, gridRate, battOn) {
   const canvas = document.getElementById('energyBarCanvas');
   if (!canvas) return;
-  const W = canvas.offsetWidth || 300;
+  const W = canvas.offsetWidth || 400;
   const H = 220;
   canvas.width  = W * devicePixelRatio;
   canvas.height = H * devicePixelRatio;
@@ -1167,88 +1294,19 @@ function irrColor(irr) {
   return ['rgba(0,212,170,0.85)','#00d4aa'];
 }
 
-function drawHeatmap(n, btc, zar, opexMon, solarCap, infraCap, minerCost, gridOn, gridRate, battOn) {
-  const btcGs  = [0,10,20,30,40,50,60];
-  const diffGs = [10,20,30,40,50,60,70,80];
-
-  let html = '<div style="display:flex;gap:2px">';
-  // Corner
-  html += '<div style="width:44px;height:22px"></div>';
-  btcGs.forEach(b => {
-    html += `<div class="hm-header">${b}%</div>`;
-  });
-  html += '</div>';
-
-  // Row label header
-  html += '<div style="display:flex;align-items:center;gap:2px;margin-bottom:2px">';
-  html += '<div style="width:44px;font-size:7px;color:var(--muted);text-align:right;padding-right:6px;line-height:1.2">DIFF↓<br>BTC→</div>';
-  html += '</div>';
-
-  diffGs.forEach(d => {
-    html += `<div style="display:flex;gap:2px;align-items:center;margin-bottom:2px">`;
-    html += `<div class="hm-row-label">${d}%</div>`;
-    btcGs.forEach(b => {
-      const cfs = buildCashflows(n,btc,zar,b/100,d/100,opexMon,solarCap,infraCap,minerCost,gridOn,gridRate,battOn);
-      const irr = calcIRR(cfs);
-      const [bg, fg] = irrColor(irr);
-      const label = isFinite(irr) ? Math.round(irr*100)+'%' : '—';
-      html += `<div class="hm-cell" style="background:${bg};color:${fg}">${label}</div>`;
-    });
-    html += '</div>';
-  });
-
-  // Legend
-  html += `<div style="display:flex;gap:16px;margin-top:12px;font-size:8px;color:var(--muted)">`;
-  [['rgba(255,77,109,0.4)','#ff4d6d','< 0%'],
-   ['rgba(240,160,32,0.35)','#f0a020','0–20%'],
-   ['rgba(0,212,170,0.4)','#00d4aa','20–50%'],
-   ['rgba(0,212,170,0.75)','#00d4aa','> 50%']].forEach(([bg,fg,label]) => {
-    html += `<div style="display:flex;align-items:center;gap:5px">
-      <div style="width:14px;height:10px;background:${bg};border-radius:2px"></div>${label}</div>`;
-  });
-  html += `<div style="margin-left:auto;letter-spacing:1.5px">10-YEAR IRR · columns=BTC growth · rows=difficulty growth</div>`;
-  html += '</div>';
-
-  document.getElementById('heatmapWrap').innerHTML = html;
-}
 
 // ── SENSITIVITY TABLE ─────────────────────────────────────────────
-function drawSensTable(n, btc, zar, opexMon, solarCap, infraCap, minerCost, capex, yr1Rev, gridOn, gridRate, battOn) {
-  const scenarios = [
-    { label:'Bear — Difficult environment', btcG:0.05,  diffG:0.60 },
-    { label:'Base — Current trajectory',   btcG:0.20,  diffG:0.40 },
-    { label:'Bull — Strong BTC cycle',     btcG:0.50,  diffG:0.40 },
-    { label:'Superbull — Halving surge',   btcG:1.00,  diffG:0.50 },
-    { label:'Flat — No growth either side',btcG:0,     diffG:0    },
-    { label:'Miner friendly — Low diff',   btcG:0.30,  diffG:0.20 },
-  ];
-
-  const annOpex = opexMon * 12;
-  let html = '';
-  scenarios.forEach(s => {
-    const cfs     = buildCashflows(n,btc,zar,s.btcG,s.diffG,opexMon,solarCap,infraCap,minerCost,gridOn,gridRate,battOn);
-    const irr     = calcIRR(cfs);
-    const net10   = cfs.slice(1).reduce((a,b)=>a+b,0) - capex;
-    const yr1net  = cfs[1];
-    const payback = yr1net > 0 ? capex / yr1net : Infinity;
-    const rating  = irr > 0.30 ? 'green' : irr > 0.10 ? 'gold' : 'red';
-    const ratingLabel = irr > 0.30 ? 'Strong' : irr > 0.10 ? 'Viable' : 'Weak';
-    html += `<tr>
-      <td>${s.label}</td>
-      <td style="color:var(--green)">${(s.btcG*100).toFixed(0)}%</td>
-      <td style="color:var(--red)">${(s.diffG*100).toFixed(0)}%</td>
-      <td>${fM(yr1Rev * (1+s.btcG)/(1+s.diffG))}</td>
-      <td>${payback < 99 ? payback.toFixed(1)+'yr' : '> 20yr'}</td>
-      <td style="color:${irr>0.3?'var(--green)':irr>0.1?'var(--gold)':'var(--red)'}">${isFinite(irr)?fPct(irr):'—'}</td>
-      <td style="color:${net10>=0?'var(--green)':'var(--red)'}">${fM(net10)}</td>
-      <td><span class="tag ${rating}">${ratingLabel}</span></td>
-    </tr>`;
-  });
-  document.getElementById('sensBody').innerHTML = html;
-}
-
 // ── TOU WEEKLY CHART ─────────────────────────────────────────────
 const TOU_DAYS    = ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+
+// Shared time formatter — used by both Y axis and tooltips
+function fmtHour(h) {
+  h = ((h % 24) + 24) % 24; // wrap
+  if (h === 0)  return '12am';
+  if (h === 12) return '12pm';
+  if (h < 12)   return h + 'am';
+  return (h - 12) + 'pm';
+}
 const TOU_COLORS  = {
   peak:    '#ff4d6d',
   std:     '#f0a020',
@@ -1287,7 +1345,8 @@ let touChart = null;
 let touSeason = 'summer';
 
 function buildTOUDatasets(season) {
-  return Array.from({length:24}, (_, hour) => ({
+  // Reversed so hour 0 (midnight) is at top with reverse:true axis
+  return Array.from({length:24}, (_, i) => { const hour = 23 - i; return ({
     label: `H${hour}`,
     data: Array.from({length:7}, (_, di) => 1),
     backgroundColor: Array.from({length:7}, (_, di) => {
@@ -1304,7 +1363,7 @@ function buildTOUDatasets(season) {
       day:    TOU_DAYS[di],
       hour,
     })),
-  }));
+  }); });
 }
 
 function buildTOU(season) {
@@ -1315,6 +1374,10 @@ function buildTOU(season) {
   touChart = new Chart(canvas, {
     type: 'bar',
     data: { labels: TOU_DAYS, datasets: buildTOUDatasets(season) },
+    plugins: [{
+      id: 'solarOverlay',
+      afterDraw: drawSolarOverlay,
+    }],
     options: {
       responsive: true,
       maintainAspectRatio: false,
@@ -1329,19 +1392,14 @@ function buildTOU(season) {
         y: {
           stacked: true,
           min: 0, max: 24,
-          reverse: false,
+          reverse: true,
           grid: { color: 'rgba(255,255,255,0.05)' },
           border: { display: false },
           ticks: {
-            stepSize: 2,
+            stepSize: 1,
             color: '#8ab0c8',
             font: { family: "'DM Mono'", size: 10 },
-            callback: v => {
-              if (v === 0)  return '12am';
-              if (v === 12) return '12pm';
-              if (v < 12)  return v + 'am';
-              return (v - 12) + 'pm';
-            },
+            callback: v => fmtHour(v),
           },
         },
       },
@@ -1361,15 +1419,13 @@ function buildTOU(season) {
             title: items => {
               const ds = touChart.data.datasets[items[0].datasetIndex];
               const m  = ds._meta[items[0].dataIndex];
-              const h  = m.hour;
-              const h1 = h === 0 ? '12am' : h < 12 ? h+'am' : h === 12 ? '12pm' : (h-12)+'pm';
-              const h2 = (h+1) === 24 ? '12am' : (h+1) < 12 ? (h+1)+'am' : (h+1)===12 ? '12pm' : ((h+1)-12)+'pm';
-              return m.day + ' · ' + h1 + ' – ' + h2;
+              return m.day + ' · ' + fmtHour(m.hour) + ' – ' + fmtHour(m.hour + 1);
             },
             label: items => {
               const ds = touChart.data.datasets[items.datasetIndex];
               const m  = ds._meta[items.dataIndex];
-              return ' ' + m.label + ' · R ' + m.rate.toFixed(2) + '/kWh (incl VAT)';
+              const sign = m.rate <= 1.97 ? '✓' : m.rate >= 3.40 ? '✗' : '~';
+              return ' ' + sign + ' ' + m.label + ' · R ' + m.rate.toFixed(2) + '/kWh';
             },
           },
         },
@@ -1377,33 +1433,53 @@ function buildTOU(season) {
     },
   });
 
-  // Draw solar overlay on canvas after render
-  touChart.options.animation.onComplete = drawSolarOverlay;
   drawTOURates(season);
 }
 
-function drawSolarOverlay() {
-  if (!touChart) return;
-  const ctx   = touChart.ctx;
-  const chart = touChart;
-  const meta6 = chart.getDatasetMeta(6);  // hour 6 = first solar hour
-  const meta18= chart.getDatasetMeta(18); // hour 18 = last solar hour
-  if (!meta6.data.length || !meta18.data.length) return;
+function drawSolarOverlay(chart) {
+  if (!chart) return;
+  const ctx = chart.ctx;
 
-  // For each day column, draw a subtle blue overlay from hour 6 to hour 19
-  TOU_DAYS.forEach((_, di) => {
-    const bar6  = meta6.data[di];
-    const bar18 = meta18.data[di];
-    if (!bar6 || !bar18) return;
-    const x    = bar6.x - bar6.width / 2;
-    const w    = bar6.width;
-    const yTop = bar18.y - bar18.height / 2; // top of hour-18 bar = 18 on y axis
-    const yBot = bar6.y + bar6.height / 2;   // bottom of hour-6 bar = 7 on y axis
-    ctx.save();
-    ctx.fillStyle = 'rgba(96,165,250,0.10)';
-    ctx.fillRect(x, yTop, w, yBot - yTop);
-    ctx.restore();
-  });
+  // Datasets reversed: dataset index = 23 - hour
+  // With reverse:true axis, hour 6 is near TOP, hour 19 near BOTTOM
+  const idxTop = 23 - 6;   // dataset 17 = hour 6  = top of solar band
+  const idxBot = 23 - 19;  // dataset 4  = hour 19 = bottom of solar band
+
+  const metaTop = chart.getDatasetMeta(idxTop);  // hour 6 bars
+  const metaBot = chart.getDatasetMeta(idxBot);  // hour 19 bars
+  if (!metaTop.data.length || !metaBot.data.length) return;
+
+  const { left, right } = chart.chartArea;
+
+  const barHour6  = metaTop.data[0];  // hour 6  bar
+  const barHour19 = metaBot.data[0];  // hour 19 bar
+  if (!barHour6 || !barHour19) return;
+
+  const yTop = barHour6.y  - barHour6.height  / 2;  // top edge of 6am bar
+  const yBot = barHour19.y + barHour19.height / 2;  // bottom edge of 7pm bar
+
+  ctx.save();
+
+  // Full-width amber fill behind everything
+  ctx.fillStyle = 'rgba(240,160,32,0.13)';
+  ctx.fillRect(left, yTop, right - left, yBot - yTop);
+
+  // Bold top line (sunrise)
+  ctx.strokeStyle = '#f0a020';
+  ctx.lineWidth = 2.5;
+  ctx.beginPath(); ctx.moveTo(left, yTop); ctx.lineTo(right, yTop); ctx.stroke();
+
+  // Bold bottom line (sunset)
+  ctx.beginPath(); ctx.moveTo(left, yBot); ctx.lineTo(right, yBot); ctx.stroke();
+
+  // "☀ SOLAR HOURS" label at the right edge, centred vertically
+  const midY = (yTop + yBot) / 2;
+  ctx.fillStyle = '#f0a020';
+  ctx.font = "bold 9px 'DM Mono'";
+  ctx.textAlign = 'right';
+  ctx.fillText('☀ SOLAR HOURS', right - 4, midY + 3);
+
+  ctx.restore();
 }
 
 function drawTOURates(season) {
@@ -1442,6 +1518,160 @@ function setTOUSeason(s) {
   buildTOU(s);
 }
 
+// ── DEFAULTS & RESET ─────────────────────────────────────────────
+const FACTORY_DEFAULTS = {
+  btcPrice:    '83 000',
+  zarRate:     '18.50',
+  nMiners:     '30',
+  minerCost:   '250 000',
+  solarCapex:  '8 500 000',
+  infraCapex:  '3 200 000',
+  monthlyOpex: '45 000',
+  sysEff:      '88',
+  gridRate:    '1.97',
+  netSpread:   '0',
+  gridOn:      false,
+  battOn:      false,
+};
+
+function getInputValues() {
+  return {
+    btcPrice:    document.getElementById('btcPrice').value,
+    zarRate:     document.getElementById('zarRate').value,
+    nMiners:     document.getElementById('nMiners').value,
+    minerCost:   document.getElementById('minerCost').value,
+    solarCapex:  document.getElementById('solarCapex').value,
+    infraCapex:  document.getElementById('infraCapex').value,
+    monthlyOpex: document.getElementById('monthlyOpex').value,
+    sysEff:      document.getElementById('sysEff').value,
+    gridRate:    document.getElementById('gridRate').value,
+    netSpread:   document.getElementById('netSpread').value,
+    gridOn:      gridMiningOn,
+    battOn:      batteryOn,
+  };
+}
+
+function applyValues(vals) {
+  const textIds = ['btcPrice','zarRate','nMiners','minerCost','solarCapex','infraCapex','monthlyOpex','sysEff','gridRate'];
+  textIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && vals[id] !== undefined) el.value = vals[id];
+  });
+  // Slider
+  const ns = document.getElementById('netSpread');
+  if (ns) { ns.value = vals.netSpread || 0; updateNetSpread(ns); }
+  // Toggles
+  if (vals.gridOn !== gridMiningOn) toggleGrid();
+  if (vals.battOn !== batteryOn)    toggleBatt();
+  recalc();
+}
+
+function saveDefaults() {
+  const vals = getInputValues();
+  try {
+    localStorage.setItem('solarHashDefaults', JSON.stringify(vals));
+    // Flash button
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = '✓ Saved';
+    btn.style.color = 'var(--green)';
+    btn.style.borderColor = 'var(--green)';
+    setTimeout(() => {
+      btn.textContent = orig;
+      btn.style.color = 'var(--gold)';
+      btn.style.borderColor = 'var(--gold)';
+    }, 1500);
+  } catch(e) { console.warn('localStorage unavailable'); }
+}
+
+function resetDefaults() {
+  let defaults = FACTORY_DEFAULTS;
+  try {
+    const saved = localStorage.getItem('solarHashDefaults');
+    if (saved) defaults = JSON.parse(saved);
+  } catch(e) {}
+  applyValues(defaults);
+  // Flash button
+  const btn = event.target;
+  const orig = btn.textContent;
+  btn.textContent = '✓ Reset';
+  btn.style.color = 'var(--green)';
+  setTimeout(() => { btn.textContent = orig; btn.style.color = 'var(--muted)'; }, 1500);
+}
+
+function loadSavedDefaults() {
+  try {
+    const saved = localStorage.getItem('solarHashDefaults');
+    if (saved) applyValues(JSON.parse(saved));
+  } catch(e) {}
+}
+
+// ── INPUT FORMAT HELPERS ─────────────────────────────────────────
+function stripFmt(el) {
+  el.value = el.value.replace(/[\s]/g, '');
+}
+function applyFmt(el) {
+  const raw = parseFloat(el.value.replace(/[\s,]/g,''));
+  if (!isNaN(raw)) {
+    if (Number.isInteger(raw)) {
+      el.value = raw.toLocaleString('en-ZA').replace(/,/g,' ');
+    }
+  }
+}
+function fmtInput(el) {
+  // Allow typing freely — format only on blur
+}
+
+// ── THREE STREAM MODEL ────────────────────────────────────────────
+function calcThreeStreams(n, btc, zar, opexMon) {
+  const DAILY_SOLAR_KWH = 1105 * 5.4 * 0.88;
+  const WH_KW = 30;
+  const PEAK_R  = 2.9539 * 1.15;
+  const STD_R   = 2.2239 * 1.15;
+  const OFF_R   = 1.7095 * 1.15;
+
+  // Stream 1: Displacement
+  const weekday = WH_KW * (5*PEAK_R + 11*STD_R + 8*OFF_R);
+  const weekend = WH_KW * 24 * OFF_R;
+  const s1 = weekday * 260 + weekend * 105;
+
+  // Stream 2: SSEG — net metering credit, capped at warehouse daytime consumption
+  const s2 = WH_KW * 13 * 365 * STD_R; // daytime warehouse at standard rate
+
+  // Stream 3: Mining net (reuse existing profile method)
+  const profileSum = PROFILE.reduce((s,p)=>s+p,0);
+  const scaled     = PROFILE.map(p => p * DAILY_SOLAR_KWH / profileSum);
+  let mh = 0;
+  scaled.forEach(sKWh => {
+    const avail = Math.max(0, sKWh - WH_KW);
+    mh += Math.min(n, Math.floor(avail / MINER_KW));
+  });
+  const s3gross = mh * (MINER_HASH * REV_PER_TH_BASE * btc / 24) * UPTIME * zar * 365;
+  const s3 = s3gross - opexMon * 12;
+
+  const total     = s1 + s2 + s3;
+  const solarCap  = +(document.getElementById('solarCapex').value.replace(/[\s,]/g,'')) || 8500000;
+  const payback   = solarCap / total;
+
+  // Update display
+  const fmt = v => 'R\u00a0' + (Math.abs(v)>=1e6 ? (Math.abs(v)/1e6).toFixed(2)+'M' : Math.round(Math.abs(v)).toLocaleString('en-ZA').replace(/,/g,' '));
+
+  document.getElementById('s1Annual').textContent = fmt(s1);
+  document.getElementById('s2Annual').textContent = fmt(s2);
+  document.getElementById('s3Annual').textContent = fmt(s3);
+  document.getElementById('s1Bar').textContent    = fmt(s1);
+  document.getElementById('s2Bar').textContent    = fmt(s2);
+  document.getElementById('s3Bar').textContent    = fmt(s3);
+  document.getElementById('sTotalAnnual').textContent = fmt(total);
+  document.getElementById('sSolarPayback').textContent = payback.toFixed(1) + ' yr';
+
+  // Bar widths relative to largest stream
+  const maxS = Math.max(s1, s2, s3);
+  document.getElementById('s1BarFill').style.width = (s1/maxS*100).toFixed(1)+'%';
+  document.getElementById('s2BarFill').style.width = (s2/maxS*100).toFixed(1)+'%';
+  document.getElementById('s3BarFill').style.width = (s3/maxS*100).toFixed(1)+'%';
+}
+
 // ── AUTO MINER SOLVER ────────────────────────────────────────────
 function calcDailySpill(n) {
   const DAILY_SOLAR_KWH = 1105 * 5.4 * 0.88;
@@ -1468,11 +1698,11 @@ function autoSetMiners() {
     prev = s;
     n = i;
   }
-  document.getElementById('nMiners').value = n;
+  document.getElementById('nMiners').value = n.toLocaleString('en-ZA').replace(/,/g,' ');
   const spill = calcDailySpill(n);
   const fleetKW = n * MINER_KW;
   document.getElementById('autoMinerNote').textContent =
-    n + ' miners · ' + Math.round(fleetKW) + ' kW' +
+    n.toLocaleString('en-ZA') + ' miners · ' + Math.round(fleetKW).toLocaleString('en-ZA') + ' kW' +
     (spill > 5 ? ' · ' + Math.round(spill) + ' kWh residual (warehouse ramp)' : ' · spill ≈ 0');
   recalc();
 }
@@ -1492,7 +1722,7 @@ async function fetchLivePrices() {
     const data = await res.json();
     if (data.error) throw new Error(data.error);
 
-    document.getElementById('btcPrice').value = data.btc;
+    document.getElementById('btcPrice').value = Number(data.btc).toLocaleString('en-ZA').replace(/,/g,' ');
     document.getElementById('zarRate').value  = data.zar;
 
     const now = new Date();
@@ -1523,6 +1753,9 @@ document.querySelectorAll('input[type=range]').forEach(el => {
   const pct = (el.value - el.min) / (el.max - el.min) * 100;
   el.style.setProperty('--pct', pct + '%');
 });
+// Init net spread display
+const _ns = document.getElementById('netSpread');
+if (_ns) updateNetSpread(_ns);
 
 // Debounce resize
 let resizeT;
@@ -1530,6 +1763,7 @@ window.addEventListener('resize', () => { clearTimeout(resizeT); resizeT=setTime
 
 recalc();
 buildTOU('summer');
+loadSavedDefaults();
 startLiveFeed();
 </script>
 </body>
