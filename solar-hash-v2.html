@@ -421,6 +421,12 @@ function safeText(id,val){var el=document.getElementById(id);if(el)el.textConten
     onmouseout="this.style.borderColor='rgba(255,255,255,0.15)';this.style.color='#5a7a8a'">
     ↺ RESET
   </button>
+  <a href="/index.html"
+    style="font-family:'Share Tech Mono',monospace;font-size:10px;letter-spacing:2px;padding:8px 16px;border:1px solid rgba(240,165,0,0.5);border-radius:2px;background:rgba(240,165,0,0.06);color:#f0a500;cursor:pointer;text-transform:uppercase;transition:all .2s;margin-right:8px;text-decoration:none;white-space:nowrap"
+    onmouseover="this.style.borderColor='#f0a500';this.style.background='rgba(240,165,0,0.15)'"
+    onmouseout="this.style.borderColor='rgba(240,165,0,0.5)';this.style.background='rgba(240,165,0,0.06)'">
+    ← MASTER IRR
+  </a>
 </div>
 
 <div id="mhours-panel" style="display:none">
@@ -983,7 +989,15 @@ function safeText(id,val){var el=document.getElementById(id);if(el)el.textConten
         <div style="font-family:var(--mono);font-size:9px;color:var(--muted);margin-top:3px">BTC × ZAR</div>
       </div>
   </div>
-  <div class="live"><div class="dot"></div>LIVE CALC</div>
+  <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+    <a href="/index.html" style="
+      font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;
+      color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:2px;
+      border:1px solid var(--border2);transition:all 0.15s;white-space:nowrap;
+    " onmouseover="this.style.color='var(--text)';this.style.borderColor='var(--text)'"
+       onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border2)'">← Master IRR</a>
+    <div class="live"><div class="dot"></div>LIVE CALC</div>
+  </div>
 </header>
 
 <!-- ROI summary card — top of page -->
