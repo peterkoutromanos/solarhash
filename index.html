@@ -210,6 +210,41 @@ canvas { display: block; width: 100%; }
 
 <div class="page">
 
+  <!-- ── KPI ROW ── -->
+  <div class="section-title">Key Metrics</div>
+  <div class="kpi-row">
+    <div class="kpi">
+      <div class="kpi-label">Total Capex</div>
+      <div class="kpi-val gold" id="kpiCapex">—</div>
+      <div class="kpi-sub">Solar + Miners + Infra</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Year 1 Revenue</div>
+      <div class="kpi-val" id="kpiRev1">—</div>
+      <div class="kpi-sub">Gross ZAR</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Year 1 Net</div>
+      <div class="kpi-val" id="kpiNet1">—</div>
+      <div class="kpi-sub">After opex</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">Simple Payback</div>
+      <div class="kpi-val" id="kpiPayback">—</div>
+      <div class="kpi-sub">Years</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">10-Year IRR</div>
+      <div class="kpi-val green" id="kpiIRR">—</div>
+      <div class="kpi-sub">Internal rate of return</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">10-Year Net Profit</div>
+      <div class="kpi-val" id="kpiProfit10">—</div>
+      <div class="kpi-sub">Cumulative after capex</div>
+    </div>
+  </div>
+
   <!-- ── INPUTS ── -->
   <div class="section-title" style="display:flex;align-items:center;justify-content:space-between">
     <span>Project Parameters</span>
@@ -233,81 +268,113 @@ canvas { display: block; width: 100%; }
   <div class="input-grid">
 
     <div class="input-cell">
-      <div class="input-label">BTC Price (USD)</div>
-      <div class="input-row">
-        <input type="text" inputmode="numeric" id="btcPrice" value="83 000" min="10000" max="500000" step="1000" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
-        <span class="input-unit">USD</span>
+      <div class="input-label" style="display:flex;justify-content:space-between">
+        <span>BTC Price (USD)</span>
+        
       </div>
-      <div style="font-size:8px;color:var(--muted);margin-top:4px">⟳ Live · Supabase proxy · 60s</div>
+      <div id="btcPriceDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">$83k<span style="font-size:11px;color:var(--muted);margin-left:4px">USD</span></div>
+      <input type="range" id="btcPrice" min="20000" max="300000" value="83000" step="1000"
+        oninput="document.getElementById('btcPriceDisplay').firstChild.textContent='$'+(+this.value/1000).toFixed(0)+'k ';updateRange(this,'','');recalc()"
+        style="width:100%;margin-top:6px">
+      <div class="range-labels"><span>$20k</span><span>$160k</span><span>$300k</span></div>
+      <div style="font-size:8px;color:var(--muted);margin-top:2px">⟳ Live · blockchain.info · 60s</div>
     </div>
 
     <div class="input-cell">
-      <div class="input-label">ZAR / USD</div>
-      <div class="input-row">
-        <input type="text" inputmode="numeric" id="zarRate" value="18.50" min="10" max="40" step="0.1" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
-        <span class="input-unit">R/USD</span>
+      <div class="input-label" style="display:flex;justify-content:space-between">
+        <span>ZAR / USD</span>
+        
       </div>
-      <div style="font-size:8px;color:var(--muted);margin-top:4px">⟳ Live · Supabase proxy · 60s</div>
+      <div id="zarRateDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">R18.5<span style="font-size:11px;color:var(--muted);margin-left:4px">R/USD</span></div>
+      <input type="range" id="zarRate" min="10" max="30" value="18.5" step="0.5"
+        oninput="document.getElementById('zarRateDisplay').firstChild.textContent='R'+(+this.value).toFixed(1)+' ';updateRange(this,'','');recalc()"
+        style="width:100%;margin-top:6px">
+      <div class="range-labels"><span>R10</span><span>R20</span><span>R30</span></div>
+      <div style="font-size:8px;color:var(--muted);margin-top:2px">⟳ Live · open.er-api.com · 60s</div>
     </div>
 
     <div class="input-cell">
-      <div class="input-label">Number of S23 Miners</div>
-      <div class="input-row">
-        <input type="text" inputmode="numeric" id="nMiners" value="30" min="1" max="300" step="1" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
-        <span class="input-unit">units</span>
-      </div>
-      <div style="margin-top:4px">
+      <div class="input-label">S23 Miners</div>
+      <div id="nMinersDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">61<span style="font-size:11px;color:var(--muted);margin-left:4px">units</span></div>
+      <input type="range" id="nMiners" min="1" max="150" value="61" step="1"
+        oninput="document.getElementById('nMinersDisplay').firstChild.textContent=this.value+' ';updateRange(this,'','');recalc()"
+        style="width:100%;margin-top:6px">
+      <div class="range-labels"><span>1</span><span>75</span><span>150</span></div>
+      <div style="margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <button onclick="autoSetMiners()" style="
           font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;
-          padding:4px 10px;border-radius:2px;cursor:pointer;
+          padding:4px 10px;border-radius:2px;cursor:pointer;white-space:nowrap;
           background:transparent;color:var(--gold);border:1px solid var(--gold);
           transition:background 0.15s;
         " onmouseover="this.style.background='rgba(240,160,32,0.15)'" onmouseout="this.style.background='transparent'"
         >⌖ Auto: zero spill</button>
-        <span id="autoMinerNote" style="font-size:8px;color:var(--muted);margin-left:8px"></span>
+        <span id="autoMinerNote" style="font-size:8px;color:var(--muted)"></span>
       </div>
     </div>
 
     <div class="input-cell">
-      <div class="input-label">Cost per Miner (landed)</div>
-      <div class="input-row">
-        <input type="text" inputmode="numeric" id="minerCost" value="250 000" min="50000" max="2000000" step="10000" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
-        <span class="input-unit">ZAR</span>
+      <div class="input-label" style="display:flex;justify-content:space-between">
+        <span>Cost per Miner (landed)</span>
+        
       </div>
+      <div id="minerCostDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">R250k<span style="font-size:11px;color:var(--muted);margin-left:4px">ZAR</span></div>
+      <input type="range" id="minerCost" min="100000" max="600000" value="250000" step="10000"
+        oninput="document.getElementById('minerCostDisplay').firstChild.textContent='R'+(+this.value/1000).toFixed(0)+'k ';updateFleetCost();updateRange(this,'','');recalc()"
+        style="width:100%;margin-top:6px">
+      <div class="range-labels"><span>R100k</span><span>R350k</span><span>R600k</span></div>
+      <div style="margin-top:5px;font-size:9px;color:var(--muted)">Fleet total: <span id="fleetCostTotal" style="color:var(--gold)">—</span></div>
     </div>
 
     <div class="input-cell">
-      <div class="input-label">Solar Plant Capex</div>
-      <div class="input-row">
-        <input type="text" inputmode="numeric" id="solarCapex" value="8 500 000" min="1000000" max="50000000" step="100000" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
-        <span class="input-unit">ZAR</span>
+      <div class="input-label" style="display:flex;justify-content:space-between">
+        <span>Solar Plant Capex</span>
+        
       </div>
-      <div style="font-size:9px;color:var(--muted)">1700 × Aiko 650W · R5/W installed</div>
+      <div id="solarCapexDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">8.5M<span style="font-size:11px;color:var(--muted);margin-left:4px">ZAR</span></div>
+      <input type="range" id="solarCapex" min="5000000" max="15000000" value="8500000" step="250000"
+        oninput="document.getElementById('solarCapexDisplay').firstChild.textContent=(+this.value/1e6).toFixed(1)+'M';updateRange(this,'','');recalc()"
+        style="width:100%;margin-top:6px">
+      <div class="range-labels"><span>R5M</span><span>R10M</span><span>R15M</span></div>
+      <div style="font-size:9px;color:var(--muted);margin-top:2px">1700 × Aiko 650W · R5/W installed</div>
     </div>
 
     <div class="input-cell">
-      <div class="input-label">Infrastructure Capex</div>
-      <div class="input-row">
-        <input type="text" inputmode="numeric" id="infraCapex" value="3 200 000" min="0" max="20000000" step="100000" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
-        <span class="input-unit">ZAR</span>
+      <div class="input-label" style="display:flex;justify-content:space-between">
+        <span>Infrastructure Capex</span>
+        
       </div>
-      <div style="font-size:9px;color:var(--muted)">Cooling · racks · wiring · civil</div>
+      <div id="infraCapexDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">3.2M<span style="font-size:11px;color:var(--muted);margin-left:4px">ZAR</span></div>
+      <input type="range" id="infraCapex" min="0" max="8000000" value="3200000" step="100000"
+        oninput="document.getElementById('infraCapexDisplay').firstChild.textContent=(+this.value/1e6).toFixed(1)+'M';updateRange(this,'','');recalc()"
+        style="width:100%;margin-top:6px">
+      <div class="range-labels"><span>R0M</span><span>R4M</span><span>R8M</span></div>
+      <div style="font-size:9px;color:var(--muted);margin-top:2px">Cooling · racks · wiring · civil</div>
     </div>
 
     <div class="input-cell">
-      <div class="input-label">Monthly Opex</div>
-      <div class="input-row">
-        <input type="text" inputmode="numeric" id="monthlyOpex" value="45 000" min="0" max="500000" step="1000" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
-        <span class="input-unit">ZAR/month</span>
+      <div class="input-label" style="display:flex;justify-content:space-between">
+        <span>Monthly Opex</span>
+
       </div>
+      <div id="monthlyOpexDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">45k<span style="font-size:11px;color:var(--muted);margin-left:4px">ZAR/mo</span></div>
+      <input type="range" id="monthlyOpex" min="10000" max="200000" value="45000" step="5000"
+        oninput="document.getElementById('monthlyOpexDisplay').firstChild.textContent=(+this.value/1000).toFixed(0)+'k';updateRange(this,'','');recalc()"
+        style="width:100%;margin-top:6px">
+      <div class="range-labels"><span>R10k</span><span>R105k</span><span>R200k</span></div>
+      
     </div>
 
     <div class="input-cell">
-      <div class="input-label">System Efficiency</div>
-      <div class="input-row">
-        <input type="text" inputmode="numeric" id="sysEff" value="88" min="70" max="99" step="1" oninput="fmtInput(this);recalc()" onfocus="stripFmt(this)" onblur="applyFmt(this)">
-        <span class="input-unit">%</span>
+      <div class="input-label" style="display:flex;justify-content:space-between">
+        <span>System Efficiency</span>
+        
       </div>
+      <div id="sysEffDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">88%</div>
+      <input type="range" id="sysEff" min="70" max="99" value="88" step="1"
+        oninput="document.getElementById('sysEffDisplay').firstChild.textContent=+this.value+'%';updateRange(this,'','');recalc()"
+        style="width:100%;margin-top:6px">
+      <div class="range-labels"><span>70%</span><span>84%</span><span>99%</span></div>
+      
     </div>
 
     <div class="input-cell" style="grid-column:span 4">
@@ -334,7 +401,7 @@ canvas { display: block; width: 100%; }
         </div>
         <div style="background:var(--surface2);padding:10px 16px;border-radius:2px;min-width:140px;border-left:2px solid var(--border2)">
           <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:2px">SPREAD</div>
-          <div style="font-size:22px;font-family:var(--mono)" id="spreadDisplay">-20%</div>
+          <div style="font-size:28px;font-family:var(--mono);font-weight:400;line-height:1" id="spreadDisplay">0%</div>
           <div style="font-size:8px;color:var(--muted);margin-top:4px">
             BTC <span id="spreadBtcG" style="color:var(--green)">+20%</span> ·
             Diff <span id="spreadDiffG" style="color:var(--red)">+40%</span>
@@ -472,41 +539,6 @@ canvas { display: block; width: 100%; }
     <div style="flex:1;min-width:200px">
       <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Effect</div>
       <div id="battNote" style="font-size:12px;color:var(--muted)">Toggle ON to add battery — stores midday solar surplus, extends mining into evening (~3.5h extra/day)</div>
-    </div>
-  </div>
-
-  <!-- ── KPI ROW ── -->
-  <div class="section-title">Key Metrics</div>
-  <div class="kpi-row">
-    <div class="kpi">
-      <div class="kpi-label">Total Capex</div>
-      <div class="kpi-val gold" id="kpiCapex">—</div>
-      <div class="kpi-sub">Solar + Miners + Infra</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Year 1 Revenue</div>
-      <div class="kpi-val" id="kpiRev1">—</div>
-      <div class="kpi-sub">Gross ZAR</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Year 1 Net</div>
-      <div class="kpi-val" id="kpiNet1">—</div>
-      <div class="kpi-sub">After opex</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">Simple Payback</div>
-      <div class="kpi-val" id="kpiPayback">—</div>
-      <div class="kpi-sub">Years</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">10-Year IRR</div>
-      <div class="kpi-val green" id="kpiIRR">—</div>
-      <div class="kpi-sub">Internal rate of return</div>
-    </div>
-    <div class="kpi">
-      <div class="kpi-label">10-Year Net Profit</div>
-      <div class="kpi-val" id="kpiProfit10">—</div>
-      <div class="kpi-sub">Cumulative after capex</div>
     </div>
   </div>
 
@@ -912,14 +944,14 @@ function updateRange(el, valId, suffix) {
 
 // ── MAIN RECALC ──────────────────────────────────────────────────
 function recalc() {
-  const btc       = +(document.getElementById('btcPrice').value.replace(/[\s,]/g,'')) || 83000;
-  const zar       = +(document.getElementById('zarRate').value.replace(/[\s,]/g,'')) || 18.5;
-  const n         = +(document.getElementById('nMiners').value.replace(/[\s,]/g,'')) || 30;
-  const minerCost = +(document.getElementById('minerCost').value.replace(/[\s,]/g,'')) || 250000;
-  const solarCap  = +(document.getElementById('solarCapex').value.replace(/[\s,]/g,'')) || 8500000;
-  const infraCap  = +(document.getElementById('infraCapex').value.replace(/[\s,]/g,'')) || 3200000;
-  const opexMon   = +(document.getElementById('monthlyOpex').value.replace(/[\s,]/g,'')) || 45000;
-  const sysEff    = +(document.getElementById('sysEff').value.replace(/[\s,]/g,'')) || 88;
+  const btc       = +(document.getElementById('btcPrice').value) || 83000;
+  const zar       = +(document.getElementById('zarRate').value) || 18.5;
+  const n         = +(document.getElementById('nMiners').value) || 30;
+  const minerCost = +(document.getElementById('minerCost').value) || 250000;
+  const solarCap  = +(document.getElementById('solarCapex').value) || 8500000;
+  const infraCap  = +(document.getElementById('infraCapex').value) || 3200000;
+  const opexMon   = +(document.getElementById('monthlyOpex').value) || 45000;
+  const sysEff    = +(document.getElementById('sysEff').value) || 88;
   const spread    = +(document.getElementById('netSpread').value) || 0;
   // Decompose spread into btcG and diffG
   // Convention: base difficulty = 40%, BTC = difficulty + spread
@@ -997,6 +1029,7 @@ function recalc() {
   drawROI(cfs, totalCapex);
   drawEnergyBar(n, btc, zar, gridMiningOn, gridRate, batteryOn);
   calcThreeStreams(n, btc, zar, opexMon);
+  updateFleetCost();
 }
 
 // ── CASHFLOW CHART ───────────────────────────────────────────────
@@ -1520,13 +1553,13 @@ function setTOUSeason(s) {
 
 // ── DEFAULTS & RESET ─────────────────────────────────────────────
 const FACTORY_DEFAULTS = {
-  btcPrice:    '83 000',
-  zarRate:     '18.50',
-  nMiners:     '30',
-  minerCost:   '250 000',
-  solarCapex:  '8 500 000',
-  infraCapex:  '3 200 000',
-  monthlyOpex: '45 000',
+  btcPrice:    '83000',
+  zarRate:     '18.5',
+  nMiners:     '61',
+  minerCost:   '250000',
+  solarCapex:  '8500000',
+  infraCapex:  '3200000',
+  monthlyOpex: '45000',
   sysEff:      '88',
   gridRate:    '1.97',
   netSpread:   '0',
@@ -1552,10 +1585,31 @@ function getInputValues() {
 }
 
 function applyValues(vals) {
-  const textIds = ['btcPrice','zarRate','nMiners','minerCost','solarCapex','infraCapex','monthlyOpex','sysEff','gridRate'];
+  const textIds = ['gridRate'];
+  const sliderIds = ['btcPrice','zarRate','nMiners','minerCost','solarCapex','infraCapex','monthlyOpex','sysEff'];
   textIds.forEach(id => {
     const el = document.getElementById(id);
     if (el && vals[id] !== undefined) el.value = vals[id];
+  });
+  sliderIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && vals[id] !== undefined) {
+      el.value = vals[id];
+      // Update display label
+      const disp = document.getElementById(id + 'Display');
+      if (disp) {
+        const v = +vals[id];
+        if (id === 'sysEff')    disp.firstChild.textContent = v + '% ';
+        else if (id === 'btcPrice') disp.firstChild.textContent = '$' + (v/1000).toFixed(0) + 'k ';
+        else if (id === 'zarRate')  disp.firstChild.textContent = 'R' + (+v).toFixed(1) + ' ';
+        else if (id === 'nMiners')  disp.firstChild.textContent = v + ' ';
+        else if (id === 'minerCost')disp.firstChild.textContent = 'R' + (v/1000).toFixed(0) + 'k ';
+        else if (v >= 1000000) disp.firstChild.textContent = (v/1e6).toFixed(1) + 'M ';
+        else disp.firstChild.textContent = (v/1000).toFixed(0) + 'k ';
+      }
+      const pct = (el.value - el.min) / (el.max - el.min) * 100;
+      el.style.setProperty('--pct', pct + '%');
+    }
   });
   // Slider
   const ns = document.getElementById('netSpread');
@@ -1606,6 +1660,15 @@ function loadSavedDefaults() {
   } catch(e) {}
 }
 
+function updateFleetCost() {
+  const el = document.getElementById('fleetCostTotal');
+  if (!el) return;
+  const n    = +(document.getElementById('nMiners').value)   || 0;
+  const cost = +(document.getElementById('minerCost').value) || 0;
+  const total = n * cost;
+  el.textContent = 'R\u00a0' + (total >= 1e6 ? (total/1e6).toFixed(2)+'M' : Math.round(total/1000)+'k') + ' (' + n + ' × R' + Math.round(cost/1000) + 'k)';
+}
+
 // ── INPUT FORMAT HELPERS ─────────────────────────────────────────
 function stripFmt(el) {
   el.value = el.value.replace(/[\s]/g, '');
@@ -1650,7 +1713,7 @@ function calcThreeStreams(n, btc, zar, opexMon) {
   const s3 = s3gross - opexMon * 12;
 
   const total     = s1 + s2 + s3;
-  const solarCap  = +(document.getElementById('solarCapex').value.replace(/[\s,]/g,'')) || 8500000;
+  const solarCap  = +(document.getElementById('solarCapex').value) || 8500000;
   const payback   = solarCap / total;
 
   // Update display
@@ -1688,22 +1751,30 @@ function calcDailySpill(n) {
 }
 
 function autoSetMiners() {
-  // Find N where adding one more miner no longer reduces spill
-  // i.e. the fleet fully absorbs all absorb-able solar
   let prev = calcDailySpill(1);
   let n = 1;
   for (let i = 2; i <= 300; i++) {
     const s = calcDailySpill(i);
-    if (prev - s < 0.5) { n = i - 1; break; } // diminishing returns stop here
+    if (prev - s < 0.5) { n = i - 1; break; }
     prev = s;
     n = i;
   }
-  document.getElementById('nMiners').value = n.toLocaleString('en-ZA').replace(/,/g,' ');
-  const spill = calcDailySpill(n);
+  // Clamp to slider range
+  const el = document.getElementById('nMiners');
+  const clamped = Math.min(+(el.max), Math.max(+(el.min), n));
+  el.value = clamped;
+  // Update track fill
+  const pct = (clamped - el.min) / (el.max - el.min) * 100;
+  el.style.setProperty('--pct', pct + '%');
+  // Update large display
+  const disp = document.getElementById('nMinersDisplay');
+  if (disp) disp.firstChild.textContent = clamped + ' ';
+  // Update note
+  const spill   = calcDailySpill(n);
   const fleetKW = n * MINER_KW;
   document.getElementById('autoMinerNote').textContent =
-    n.toLocaleString('en-ZA') + ' miners · ' + Math.round(fleetKW).toLocaleString('en-ZA') + ' kW' +
-    (spill > 5 ? ' · ' + Math.round(spill) + ' kWh residual (warehouse ramp)' : ' · spill ≈ 0');
+    n + ' miners · ' + Math.round(fleetKW) + ' kW' +
+    (spill > 5 ? ' · ' + Math.round(spill) + ' kWh residual' : ' · spill ≈ 0');
   recalc();
 }
 
@@ -1722,8 +1793,18 @@ async function fetchLivePrices() {
     const data = await res.json();
     if (data.error) throw new Error(data.error);
 
-    document.getElementById('btcPrice').value = Number(data.btc).toLocaleString('en-ZA').replace(/,/g,' ');
-    document.getElementById('zarRate').value  = data.zar;
+    const btcEl = document.getElementById('btcPrice');
+    const btcClamped = Math.min(300000, Math.max(20000, data.btc));
+    btcEl.value = btcClamped;
+    const pctBtc = (btcClamped - btcEl.min) / (btcEl.max - btcEl.min) * 100;
+    btcEl.style.setProperty('--pct', pctBtc + '%');
+    document.getElementById('btcPriceDisplay').firstChild.textContent = '$' + (btcClamped/1000).toFixed(0) + 'k ';
+    const zarEl = document.getElementById('zarRate');
+    const zarClamped = Math.min(30, Math.max(10, data.zar));
+    zarEl.value = zarClamped;
+    const pctZar = (zarClamped - zarEl.min) / (zarEl.max - zarEl.min) * 100;
+    zarEl.style.setProperty('--pct', pctZar + '%');
+    document.getElementById('zarRateDisplay').firstChild.textContent = 'R' + zarClamped.toFixed(1) + ' ';
 
     const now = new Date();
     const ts  = now.getHours().toString().padStart(2,'0') + ':' +
@@ -1761,6 +1842,22 @@ if (_ns) updateNetSpread(_ns);
 let resizeT;
 window.addEventListener('resize', () => { clearTimeout(resizeT); resizeT=setTimeout(()=>{recalc();buildTOU(touSeason);},100); });
 
+// Set zero-spill as default miner count at startup
+(function() {
+  let prev = calcDailySpill(1), n = 1;
+  for (let i = 2; i <= 300; i++) {
+    const s = calcDailySpill(i);
+    if (prev - s < 0.5) { n = i - 1; break; }
+    prev = s; n = i;
+  }
+  const el = document.getElementById('nMiners');
+  const clamped = Math.min(+(el.max), n);
+  el.value = clamped;
+  const pct = (clamped - el.min) / (el.max - el.min) * 100;
+  el.style.setProperty('--pct', pct + '%');
+  const disp = document.getElementById('nMinersDisplay');
+  if (disp) disp.firstChild.textContent = clamped + ' ';
+})();
 recalc();
 buildTOU('summer');
 loadSavedDefaults();
