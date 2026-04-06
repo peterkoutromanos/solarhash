@@ -200,6 +200,20 @@ canvas { display: block; width: 100%; }
 .capex-seg .tip-value { font-size:16px; font-family:var(--mono); color:var(--text); font-weight:600; }
 .capex-seg .tip-pct   { font-size:11px; color:var(--muted); margin-top:2px; }
 .capex-seg .tip-note  { font-size:9px; color:var(--muted); margin-top:5px; border-top:1px solid var(--border); padding-top:5px; line-height:1.4; }
+
+
+/* ── LANGUAGE TOGGLE ── */
+#langEN, #langZH, #langGR {
+  transition: background 0.2s, opacity 0.2s, transform 0.15s;
+}
+#langEN:hover, #langZH:hover, #langGR:hover { transform: scale(1.15); opacity: 1 !important; }
+[data-i18n] { transition: opacity 0.15s, color 0.2s; }
+/* English mode — warm cream */
+body.lang-en [data-i18n] { color: #f0e6c8; }
+/* Chinese mode — red */
+body.lang-zh [data-i18n] { color: #e03030; }
+/* Greek mode — sky blue */
+body.lang-gr [data-i18n] { color: #4db8ff; }
 </style>
 </head>
 <body>
@@ -221,6 +235,17 @@ canvas { display: block; width: 100%; }
       transition:all 0.15s;
     " onmouseover="this.style.background='rgba(240,160,32,0.15)'"
        onmouseout="this.style.background='transparent'">⊙ Save as Default</button>
+        <div style="display:flex;align-items:center;gap:3px;background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:3px">
+          <button id="langEN" onclick="applyLang('en')" title="English"
+            style="font-size:18px;padding:2px 6px;border-radius:5px;cursor:pointer;border:none;
+                   background:var(--gold);line-height:1.4;transition:all 0.2s;user-select:none">🇬🇧</button>
+          <button id="langZH" onclick="applyLang('zh')" title="中文"
+            style="font-size:18px;padding:2px 6px;border-radius:5px;cursor:pointer;border:none;
+                   background:transparent;line-height:1.4;transition:all 0.2s;user-select:none;opacity:0.4">🇨🇳</button>
+          <button id="langGR" onclick="applyLang('gr')" title="Ελληνικά"
+            style="font-size:18px;padding:2px 6px;border-radius:5px;cursor:pointer;border:none;
+                   background:transparent;line-height:1.4;transition:all 0.2s;user-select:none;opacity:0.4">🇬🇷</button>
+        </div>
     <a href="/solar-hash-v2.html" style="
       font-family:var(--mono);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;
       color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:2px;
@@ -230,15 +255,15 @@ canvas { display: block; width: 100%; }
       Solar Hash v2 →
     </a>
   <div class="header-stats">    <div class="hstat">
-      <span class="hstat-label">BTC Price</span>
+      <span class="hstat-label" data-i18n="btcPrice">BTC Price</span>
       <span class="hstat-val" id="hBtc">$83,000</span>
     </div>
     <div class="hstat">
-      <span class="hstat-label">ZAR Rate</span>
+      <span class="hstat-label" data-i18n="zarRate">ZAR Rate (R per $)</span>
       <span class="hstat-val" id="hZar">R18.50</span>
     </div>
     <div class="hstat">
-      <span class="hstat-label">Hashprice</span>
+      <span class="hstat-label" data-i18n="hashprice">Hashprice</span>
       <span class="hstat-val" id="hHp">—</span>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:3px">
@@ -252,44 +277,44 @@ canvas { display: block; width: 100%; }
 <div class="page">
 
   <!-- ── KPI ROW ── -->
-  <div class="section-title">Key Metrics</div>
+  <div class="section-title" data-i18n="keyMetrics">Key Metrics</div>
   <div class="kpi-row">
     <div class="kpi">
-      <div class="kpi-label">Total Capex</div>
+      <div class="kpi-label" data-i18n="totalCapex">Total Capex</div>
       <div class="kpi-val gold" id="kpiCapex">—</div>
-      <div class="kpi-sub">Solar + Miners + Infra</div>
+      <div class="kpi-sub" data-i18n="solarMinersInfra">Solar + Miners + Infra</div>
     </div>
     <div class="kpi">
-      <div class="kpi-label">Year 1 Revenue</div>
+      <div class="kpi-label" data-i18n="year1Rev">Year 1 Revenue</div>
       <div class="kpi-val" id="kpiRev1">—</div>
-      <div class="kpi-sub">Gross ZAR</div>
+      <div class="kpi-sub" data-i18n="grossZAR">Gross ZAR</div>
     </div>
     <div class="kpi">
-      <div class="kpi-label">Year 1 Net</div>
+      <div class="kpi-label" data-i18n="year1Net">Year 1 Net</div>
       <div class="kpi-val" id="kpiNet1">—</div>
-      <div class="kpi-sub">After opex</div>
+      <div class="kpi-sub" data-i18n="afterOpex">After opex</div>
     </div>
     <div class="kpi">
-      <div class="kpi-label">Simple Payback</div>
+      <div class="kpi-label" data-i18n="simplePayback">Simple Payback</div>
       <div class="kpi-val" id="kpiPayback">—</div>
-      <div class="kpi-sub">Years</div>
+      <div class="kpi-sub" data-i18n="years">Years</div>
     </div>
     <div class="kpi">
-      <div class="kpi-label">10-Year IRR</div>
+      <div class="kpi-label" data-i18n="tenYrIRR">10-Year IRR</div>
       <div class="kpi-val green" id="kpiIRR">—</div>
-      <div class="kpi-sub">Internal rate of return</div>
+      <div class="kpi-sub" data-i18n="irrDef">Internal rate of return</div>
     </div>
     <div class="kpi">
-      <div class="kpi-label">10-Year Net Profit</div>
+      <div class="kpi-label" data-i18n="tenYrNet">10-Year Net Profit</div>
       <div class="kpi-val" id="kpiProfit10">—</div>
-      <div class="kpi-sub">Cumulative after capex</div>
+      <div class="kpi-sub" data-i18n="cumAfterCapex">Cumulative after capex</div>
     </div>
   </div>
 
   <!-- ── CAPEX BAR ── -->
   <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 16px;margin-bottom:16px">
     <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:10px">
-      <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:var(--mono)">Capex Breakdown</div>
+      <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:var(--mono)" data-i18n="capexBreakdown">Capex Breakdown</div>
       <div style="font-family:var(--display);font-size:22px;font-weight:700;color:var(--text)" id="capexBarTotal">—</div>
     </div>
     <div id="capexBar" style="display:flex;height:28px;border-radius:3px;overflow:visible;margin-bottom:8px;position:relative"></div>
@@ -297,13 +322,21 @@ canvas { display: block; width: 100%; }
   </div>
 
   <!-- ── INPUTS ── -->
-  <div class="section-title">Project Parameters</div>
+  <div class="section-title" data-i18n="projectParams">Project Parameters</div>
   <div class="input-grid">
 
     <div class="input-cell">
-      <div class="input-label" style="display:flex;justify-content:space-between">
-        <span>BTC Price (USD)</span>
-        
+      <div class="input-label" style="display:flex;justify-content:space-between;align-items:center">
+        <span data-i18n="btcPriceSlider">BTC Price (USD)</span>
+        <button onclick="snapToSpot('btc')" id="btcSpotBtn"
+          style="font-family:var(--mono);font-size:7px;letter-spacing:1.5px;text-transform:uppercase;
+                 padding:3px 7px;border-radius:2px;cursor:pointer;white-space:nowrap;
+                 background:transparent;color:var(--muted);border:1px solid var(--border2);
+                 transition:all 0.15s"
+          onmouseover="this.style.color='var(--gold)';this.style.borderColor='var(--gold)'"
+          onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border2)'">
+          ⟳ Spot
+        </button>
       </div>
       <div id="btcPriceDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">$83k<span style="font-size:11px;color:var(--muted);margin-left:4px">USD</span></div>
       <input type="range" id="btcPrice" min="20000" max="300000" value="83000" step="1000"
@@ -314,9 +347,17 @@ canvas { display: block; width: 100%; }
     </div>
 
     <div class="input-cell">
-      <div class="input-label" style="display:flex;justify-content:space-between">
-        <span>ZAR / USD</span>
-        
+      <div class="input-label" style="display:flex;justify-content:space-between;align-items:center">
+        <span data-i18n="zarUSD">ZAR / USD Rate (R per $)</span>
+        <button onclick="snapToSpot('zar')" id="zarSpotBtn"
+          style="font-family:var(--mono);font-size:7px;letter-spacing:1.5px;text-transform:uppercase;
+                 padding:3px 7px;border-radius:2px;cursor:pointer;white-space:nowrap;
+                 background:transparent;color:var(--muted);border:1px solid var(--border2);
+                 transition:all 0.15s"
+          onmouseover="this.style.color='var(--gold)';this.style.borderColor='var(--gold)'"
+          onmouseout="this.style.color='var(--muted)';this.style.borderColor='var(--border2)'">
+          ⟳ Spot
+        </button>
       </div>
       <div id="zarRateDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">R18.5<span style="font-size:11px;color:var(--muted);margin-left:4px">R/USD</span></div>
       <input type="range" id="zarRate" min="10" max="30" value="18.5" step="0.5"
@@ -327,7 +368,7 @@ canvas { display: block; width: 100%; }
     </div>
 
     <div class="input-cell">
-      <div class="input-label">S23 Miners</div>
+      <div class="input-label" data-i18n="minerCount">S23 Miners</div>
       <div id="nMinersDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">61<span style="font-size:11px;color:var(--muted);margin-left:4px">units</span></div>
       <input type="range" id="nMiners" min="1" max="150" value="61" step="1"
         oninput="(document.getElementById('nMinersDisplay')||{firstChild:{}}).firstChild.textContent =this.value+' ';updateRange(this,'','');recalc()"
@@ -345,17 +386,20 @@ canvas { display: block; width: 100%; }
       </div>
     </div>
 
-    <div class="input-cell">
+        <div class="input-cell">
       <div class="input-label" style="display:flex;justify-content:space-between;align-items:center;gap:6px">
-        <span style="white-space:nowrap">Cost per Miner (landed)</span>
+        <span style="white-space:nowrap" data-i18n="costPerMiner">Cost per Miner (landed)</span>
         <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
           <label style="display:flex;align-items:center;gap:3px;font-size:9px;color:var(--muted);cursor:pointer;white-space:nowrap">
             <input type="checkbox" id="form3U" onchange="toggleFormFactor()"
               style="cursor:pointer;accent-color:var(--gold);width:11px;height:11px">
-            3U
+            <span data-i18n="form3U">3U</span>
           </label>
           <select id="minerSelect" onchange="applyMinerChoice(this.value)"
-            style="font-size:10px;padding:2px 4px;border-radius:4px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;max-width:115px">
+            style="font-size:11px;font-weight:600;padding:3px 6px;border-radius:4px;
+                   border:1px solid var(--gold);background:rgba(240,160,32,0.08);
+                   color:var(--gold);cursor:pointer;max-width:130px;
+                   font-family:var(--mono);letter-spacing:0.5px">
             <option value="s23">S23 Hyd</option>
             <option value="s21">S21 Hyd</option>
             <option value="s21p">S21+ Hyd 358</option>
@@ -363,17 +407,16 @@ canvas { display: block; width: 100%; }
           </select>
         </div>
       </div>
-      <div id="minerCostDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">R250k<span style="font-size:11px;color:var(--muted);margin-left:4px">ZAR</span></div>
+      <div id="minerCostDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--gold);line-height:1;margin:6px 0 2px;text-shadow:0 0 20px rgba(240,160,32,0.3)">R250k<span style="font-size:11px;color:var(--muted);margin-left:4px">ZAR</span></div>
       <input type="range" id="minerCost" min="10000" max="600000" value="250000" step="1000"
         oninput="(document.getElementById('minerCostDisplay')||{firstChild:{}}).firstChild.textContent ='R'+(+this.value/1000).toFixed(0)+'k ';updateFleetCost();updateRange(this,'','');recalc()"
         style="width:100%;margin-top:6px">
       <div class="range-labels"><span>R10k</span><span>R300k</span><span>R600k</span></div>
-      <div style="margin-top:5px;font-size:9px;color:var(--muted)">Fleet total: <span id="fleetCostTotal" style="color:var(--gold)">—</span></div>
+      <div style="margin-top:5px;font-size:9px;color:var(--muted)">Fleet total: <span id="fleetCostTotal" style="color:var(--gold);font-weight:600">—</span></div>
     </div>
-
     <div class="input-cell">
       <div class="input-label" style="display:flex;justify-content:space-between">
-        <span>Solar Plant Capex</span>
+        <span data-i18n="solarCapex">Solar Plant Capex</span>
         
       </div>
       <div id="solarCapexDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">8.5M<span style="font-size:11px;color:var(--muted);margin-left:4px">ZAR</span></div>
@@ -386,20 +429,20 @@ canvas { display: block; width: 100%; }
 
     <div class="input-cell">
       <div class="input-label" style="display:flex;justify-content:space-between">
-        <span>Infrastructure Capex</span>
+        <span data-i18n="infraCapex">Infrastructure Capex</span>
       </div>
       <div id="infraCapexDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">3.2M<span style="font-size:11px;color:var(--muted);margin-left:4px">ZAR</span></div>
       <input type="range" id="infraCapex" min="0" max="8000000" value="3200000" step="100000"
         oninput="(document.getElementById('infraCapexDisplay')||{firstChild:{}}).firstChild.textContent =(+this.value/1e6).toFixed(1)+'M';updateRange(this,'','');recalc()"
         style="width:100%;margin-top:6px">
       <div class="range-labels"><span>R0M</span><span>R4M</span><span>R8M</span></div>
-      <div style="font-size:9px;color:var(--muted);margin-top:2px">Cooling · racks · wiring · civil</div>
+      <div style="font-size:9px;color:var(--muted);margin-top:2px" data-i18n="coolingNote" data-i18n="coolingNote">Cooling · racks · wiring · civil</div>
       <div id="coolingNote" style="font-size:9px;color:var(--gold);margin-top:3px">Antspace HW5 landed: R2.04M</div>
     </div>
 
     <div class="input-cell">
       <div class="input-label" style="display:flex;justify-content:space-between">
-        <span>Monthly Opex</span>
+        <span data-i18n="monthlyOpex">Monthly Opex</span>
 
       </div>
       <div id="monthlyOpexDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">45k<span style="font-size:11px;color:var(--muted);margin-left:4px">ZAR/mo</span></div>
@@ -412,7 +455,7 @@ canvas { display: block; width: 100%; }
 
     <div class="input-cell">
       <div class="input-label" style="display:flex;justify-content:space-between">
-        <span>System Efficiency</span>
+        <span data-i18n="sysEff">System Efficiency</span>
         
       </div>
       <div id="sysEffDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">88%</div>
@@ -461,19 +504,19 @@ canvas { display: block; width: 100%; }
   <!-- ── FIXED ASSUMPTIONS ── -->
   <div class="assumptions" style="margin-bottom:14px">
     <div class="assumption">
-      <div class="assumption-label">Solar Plant</div>
+      <div class="assumption-label" data-i18n="solarPlant">Solar Plant</div>
       <div class="assumption-val">1,700 × Aiko 650W · 1,105 kWp · 1,050 kW AC · PSH 5.4h · Sandton</div>
     </div>
     <div class="assumption">
-      <div class="assumption-label">Miner Spec</div>
+      <div class="assumption-label" data-i18n="minerSpec">Miner Spec</div>
       <div class="assumption-val">S23 Standard · 1,160 TH/s · 11.02 kW · 9.5 J/TH · R250k landed</div>
     </div>
     <div class="assumption">
-      <div class="assumption-label">Revenue Model</div>
+      <div class="assumption-label" data-i18n="revenueModel">Revenue Model</div>
       <div class="assumption-val" id="revenueModelNote">Solar-only hours · no grid mining</div>
     </div>
     <div class="assumption">
-      <div class="assumption-label">IRR Method</div>
+      <div class="assumption-label" data-i18n="irrMethod">IRR Method</div>
       <div class="assumption-val">10-year · 6% ZAR depreciation · no terminal value</div>
     </div>
   </div>
@@ -488,7 +531,7 @@ canvas { display: block; width: 100%; }
     <!-- Toggle -->
     <div style="display:flex;align-items:center;gap:14px;min-width:200px">
       <div>
-        <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Grid Mining (Off-Peak)</div>
+        <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">data-i18n="gridMining">Grid Mining (Off-Peak)</div>
         <div style="display:flex;align-items:center;gap:12px">
           <div id="gridToggleWrap" onclick="toggleGrid()" style="
             width:52px;height:28px;border-radius:14px;background:var(--dim);
@@ -540,7 +583,7 @@ canvas { display: block; width: 100%; }
     <!-- Toggle -->
     <div style="display:flex;align-items:center;gap:14px;min-width:200px">
       <div>
-        <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Battery Storage</div>
+        <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px" data-i18n="battStorage">Battery Storage</div>
         <div style="display:flex;align-items:center;gap:12px">
           <div id="battToggleWrap" onclick="toggleBatt()" style="
             width:52px;height:28px;border-radius:14px;background:var(--dim);
@@ -583,72 +626,72 @@ canvas { display: block; width: 100%; }
 
     <!-- Status note -->
     <div style="flex:1;min-width:200px">
-      <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Effect</div>
-      <div id="battNote" style="font-size:12px;color:var(--muted)">Toggle ON to add battery — stores midday solar surplus, extends mining into evening (~3.5h extra/day)</div>
+      <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px" data-i18n="effect">Effect</div>
+      <div id="battNote" style="font-size:12px;color:var(--muted)" data-i18n="battDesc">Toggle ON to add battery — stores midday solar surplus, extends mining into evening (~3.5h extra/day)</div>
     </div>
   </div>
 
   <!-- ── THREE STREAMS ── -->
-  <div class="section-title">Solar Monetisation · Three Revenue Streams</div>
+  <div class="section-title" data-i18n="threeStreams">Solar Monetisation · Three Revenue Streams</div>
   <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1px 1fr;gap:0;margin-bottom:32px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden">
 
     <!-- Stream 1: Displacement -->
     <div style="background:var(--surface);padding:14px 18px">
-      <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Stream 1 · Always On</div>
-      <div style="font-family:var(--display);font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">Displace Grid</div>
-      <div style="font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.6">Solar covers warehouse electricity during daylight hours. Saves peak + standard tariff costs directly off the bill.</div>
+      <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px" data-i18n="s1Tag">Stream 1 · Always On</div>
+      <div style="font-family:var(--display);font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px" data-i18n="s1Title">Displace Grid</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.6" data-i18n="s1Desc">Solar covers warehouse electricity during daylight hours. Saves peak + standard tariff costs directly off the bill.</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
         <div style="background:var(--surface2);padding:10px 12px;border-radius:2px">
-          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px">ANNUAL SAVING</div>
+          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px" data-i18n="annualSaving">ANNUAL SAVING</div>
           <div style="font-family:var(--display);font-size:18px;color:var(--green);font-weight:700" id="s1Annual">—</div>
         </div>
         <div style="background:var(--surface2);padding:10px 12px;border-radius:2px">
-          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px">TYPE</div>
-          <div style="font-size:11px;color:var(--text);margin-top:3px">Bill saving<br>Guaranteed</div>
+          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px" data-i18n="type">TYPE</div>
+          <div style="font-size:11px;color:var(--text);margin-top:3px" data-i18n="s1Type">Bill saving<br>Guaranteed</div>
         </div>
       </div>
       <div style="font-size:8px;color:var(--muted);border-top:1px solid var(--border);padding-top:10px">
-        30 kW warehouse · peak R3.40 + std R2.56 displaced · ~3% of plant capacity
+        <span data-i18n="s1Note">30 kW warehouse · peak R3.40 + std R2.56 displaced · ~3% of plant capacity</span>
       </div>
     </div>
 
     <!-- Stream 2: SSEG -->
     <div style="background:var(--surface);padding:14px 18px;border-left:1px solid var(--border)">
-      <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Stream 2 · Limited</div>
-      <div style="font-family:var(--display);font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">Sell Back (SSEG)</div>
-      <div style="font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.6">Net metering bill credit via City Power SSEG. Capped at your own consumption — cannot earn cash for excess solar.</div>
+      <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px" data-i18n="s2Tag">Stream 2 · Limited</div>
+      <div style="font-family:var(--display);font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px" data-i18n="s2Title">Sell Back (SSEG)</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.6" data-i18n="s2Desc">Net metering bill credit via City Power SSEG. Capped at your own consumption — cannot earn cash for excess solar.</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
         <div style="background:var(--surface2);padding:10px 12px;border-radius:2px">
-          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px">ANNUAL CREDIT</div>
+          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px" data-i18n="annualCredit">ANNUAL CREDIT</div>
           <div style="font-family:var(--display);font-size:18px;color:#f0a020;font-weight:700" id="s2Annual">—</div>
         </div>
         <div style="background:var(--surface2);padding:10px 12px;border-radius:2px">
-          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px">TYPE</div>
-          <div style="font-size:11px;color:var(--text);margin-top:3px">Bill credit<br>Not cash</div>
+          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px" data-i18n="type2">TYPE</div>
+          <div style="font-size:11px;color:var(--text);margin-top:3px" data-i18n="s2Type">Bill credit<br>Not cash</div>
         </div>
       </div>
       <div style="font-size:8px;color:var(--muted);border-top:1px solid var(--border);padding-top:10px">
-        87% of plant output has nowhere to go · wholesale WEPS rate only · complex City Power approval
+        <span data-i18n="s2Note">87% of plant output has nowhere to go · wholesale WEPS rate only · complex City Power approval</span>
       </div>
     </div>
 
     <!-- Stream 3: Mining -->
     <div style="background:var(--surface);padding:14px 18px;border-left:1px solid var(--border)">
-      <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Stream 3 · Primary</div>
-      <div style="font-family:var(--display);font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">Bitcoin Mining</div>
-      <div style="font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.6">Miners consume all surplus solar the warehouse doesn't need. Converts excess kWh directly to BTC at full plant capacity.</div>
+      <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px" data-i18n="s3Tag">Stream 3 · Primary</div>
+      <div style="font-family:var(--display);font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px" data-i18n="s3Title">Bitcoin Mining</div>
+      <div style="font-size:11px;color:var(--muted);margin-bottom:16px;line-height:1.6" data-i18n="s3Desc">Miners consume all surplus solar the warehouse doesn't need. Converts excess kWh directly to BTC at full plant capacity.</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:10px">
         <div style="background:var(--surface2);padding:10px 12px;border-radius:2px">
-          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px">ANNUAL NET</div>
+          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px" data-i18n="annualNet">ANNUAL NET</div>
           <div style="font-family:var(--display);font-size:18px;color:var(--green);font-weight:700" id="s3Annual">—</div>
         </div>
         <div style="background:var(--surface2);padding:10px 12px;border-radius:2px">
-          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px">TYPE</div>
-          <div style="font-size:11px;color:var(--text);margin-top:3px">Cash revenue<br>BTC price risk</div>
+          <div style="font-size:8px;color:var(--muted);letter-spacing:1px;margin-bottom:3px" data-i18n="type3">TYPE</div>
+          <div style="font-size:11px;color:var(--text);margin-top:3px" data-i18n="s3Type">Cash revenue<br>BTC price risk</div>
         </div>
       </div>
       <div style="font-size:8px;color:var(--muted);border-top:1px solid var(--border);padding-top:10px">
-        ~97% of plant capacity · solar hours only · uses dashboard miner count
+        <span data-i18n="s3Note">~97% of plant capacity · solar hours only · uses dashboard miner count</span>
       </div>
     </div>
 
@@ -657,26 +700,26 @@ canvas { display: block; width: 100%; }
 
     <!-- Combined total -->
     <div style="background:var(--surface2);padding:14px 18px">
-      <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Combined · All Streams</div>
-      <div style="font-family:var(--display);font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px">Total Return</div>
+      <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:4px" data-i18n="combinedTag">Combined · All Streams</div>
+      <div style="font-family:var(--display);font-size:18px;font-weight:700;color:var(--text);margin-bottom:8px" data-i18n="totalReturn">Total Return</div>
 
       <div style="margin-bottom:8px">
         <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
-          <span style="font-size:9px;color:var(--muted)">Displacement</span>
+          <span style="font-size:9px;color:var(--muted)" data-i18n="displacement">Displacement</span>
           <span style="font-size:13px;color:var(--green)" id="s1Bar">—</span>
         </div>
         <div style="height:4px;background:var(--dim);border-radius:2px;margin-bottom:10px">
           <div id="s1BarFill" style="height:4px;background:var(--green);border-radius:2px;width:0%;transition:width 0.4s"></div>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
-          <span style="font-size:9px;color:var(--muted)">SSEG credit</span>
+          <span style="font-size:9px;color:var(--muted)" data-i18n="ssegCredit">SSEG credit</span>
           <span style="font-size:13px;color:#f0a020" id="s2Bar">—</span>
         </div>
         <div style="height:4px;background:var(--dim);border-radius:2px;margin-bottom:10px">
           <div id="s2BarFill" style="height:4px;background:#f0a020;border-radius:2px;width:0%;transition:width 0.4s"></div>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
-          <span style="font-size:9px;color:var(--muted)">Bitcoin mining</span>
+          <span style="font-size:9px;color:var(--muted)" data-i18n="bitcoinMining">Bitcoin mining</span>
           <span style="font-size:13px;color:var(--green)" id="s3Bar">—</span>
         </div>
         <div style="height:4px;background:var(--dim);border-radius:2px;margin-bottom:16px">
@@ -685,9 +728,9 @@ canvas { display: block; width: 100%; }
       </div>
 
       <div style="border-top:1px solid var(--border2);padding-top:14px">
-        <div style="font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px">Total Annual</div>
+        <div style="font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:4px" data-i18n="totalAnnual">Total Annual</div>
         <div style="font-family:var(--display);font-size:28px;font-weight:800;color:var(--gold)" id="sTotalAnnual">—</div>
-        <div style="font-size:9px;color:var(--muted);margin-top:6px">Solar payback: <span id="sSolarPayback" style="color:var(--text)">—</span></div>
+        <div style="font-size:9px;color:var(--muted);margin-top:6px">data-i18n="solarPayback">Solar payback:</span> <span id="sSolarPayback" style="color:var(--text)">—</span></div>
       </div>
     </div>
 
@@ -698,7 +741,7 @@ canvas { display: block; width: 100%; }
     <div class="chart-card">
       <div class="chart-title">
         <span style="color:var(--red);font-size:8px;letter-spacing:1.5px;font-weight:500">A</span>
-        <span>Annual Cash Flow · 10yr</span>
+        <span data-i18n="annualCashFlow">Annual Cash Flow · 10yr</span>
         <span id="cashflowNote" style="font-size:9px;color:var(--green);margin-left:auto"></span>
       </div>
       <canvas id="cashflowCanvas" height="200"></canvas>
@@ -706,7 +749,7 @@ canvas { display: block; width: 100%; }
     <div class="chart-card">
       <div class="chart-title">
         <span style="color:var(--red);font-size:8px;letter-spacing:1.5px;font-weight:500">B</span>
-        <span>Cumulative Return</span>
+        <span data-i18n="cumulativeReturn">Cumulative Return</span>
         <span id="roiNote" style="font-size:9px;color:var(--gold);margin-left:auto"></span>
       </div>
       <canvas id="roiCanvas" height="200"></canvas>
@@ -714,7 +757,7 @@ canvas { display: block; width: 100%; }
     <div class="chart-card">
       <div class="chart-title">
         <span style="color:var(--red);font-size:8px;letter-spacing:1.5px;font-weight:500">C</span>
-        <span>Daily Energy Balance</span>
+        <span data-i18n="dailyEnergy" data-i18n="dailyEnergy">Daily Energy Balance</span>
         <span id="energyBarNote" style="font-size:9px;color:var(--muted);margin-left:auto"></span>
       </div>
       <canvas id="energyBarCanvas" height="200"></canvas>
@@ -725,7 +768,7 @@ canvas { display: block; width: 100%; }
 
 
   <!-- ── TOU WEEKLY SCHEDULE ── -->
-  <div class="section-title">City Power TOU Schedule · Weekly</div>
+  <div class="section-title" data-i18n="touSchedule">City Power TOU Schedule · Weekly</div>
   <div class="chart-card" style="margin-bottom:8px">
     <div class="chart-title" style="margin-bottom:16px">
       <span style="color:var(--red);font-size:8px;letter-spacing:1.5px;font-weight:500">E</span>
@@ -775,7 +818,7 @@ canvas { display: block; width: 100%; }
   </div>
 
   <!-- ── ASSUMPTIONS ── -->
-  <div class="section-title">Fixed Assumptions</div>
+  <div class="section-title" data-i18n="fixedAssumptions">Fixed Assumptions</div>
   <div class="assumptions">
     <div class="assumption">
       <div class="assumption-label">Solar Plant</div>
@@ -791,14 +834,14 @@ canvas { display: block; width: 100%; }
     </div>
     <div class="assumption">
       <div class="assumption-label">IRR Method</div>
-      <div class="assumption-val">10-year NPV · discount rate 10% · ZAR nominal · no terminal value</div>
+      <div class="assumption-val" data-i18n="irrMethodVal" data-i18n="irrMethodVal">10-year NPV · discount rate 10% · ZAR nominal · no terminal value</div>
     </div>
   </div>
 
   <!-- ── IRR BY MINER MODEL ── -->
-  <div class="section-title" style="margin-top:32px">Project IRR by Miner Model</div>
+  <div class="section-title" style="margin-top:32px" data-i18n="irrByMiner">Project IRR by Miner Model</div>
   <div style="font-size:9px;color:var(--muted);margin-bottom:12px;letter-spacing:0.5px">
-    All scenarios use current dashboard slider values · solar-only · no battery · 10-year horizon
+    <span data-i18n="irrSubtitle">All scenarios use current dashboard slider values · solar-only · no battery · 10-year horizon</span>
   </div>
   <div id="irrTable" style="overflow-x:auto">
     <table style="width:100%;border-collapse:collapse;font-size:11px">
@@ -809,6 +852,7 @@ canvas { display: block; width: 100%; }
           <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase">TH/s</th>
           <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase">J/TH</th>
           <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase">Fleet</th>
+          <th style="text-align:right;padding:6px 8px;color:var(--text);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase">kW/unit</th>
           <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase">Hosting</th>
           <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase">Capex</th>
           <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase">+Batt</th>
@@ -1268,8 +1312,15 @@ function buildIRRTable(btc, zar, btcG, diffG, opexMon, solarCap, battOn) {
     if (irrNoB > bestNoB.val) { bestNoB.val = irrNoB; bestNoB.key = key; }
     if (irrWiB > bestWiB.val) { bestWiB.val = irrWiB; bestWiB.key = key; }
 
+    // At-wall per miner: miner draw + cooling overhead per unit + warehouse per unit
+    // Cooling overhead: 28.8kW CDU fans + 5kW misc, shared across fleet
+    // Warehouse 30kW shared across fleet
+    const COOLING_OH  = 28.8 + 5.0 + 30; // kW shared overhead
+    const atWallPerMiner = +(m.kw + COOLING_OH / n).toFixed(2);
+    const atWallFleet    = Math.round(n * m.kw + COOLING_OH);
+
     return { key, m, n, fleetCap, capNoB, capWiB, annRevY1,
-             irrNoB, pbNoB, irrWiB, pbWiB, infraCap };
+             irrNoB, pbNoB, irrWiB, pbWiB, infraCap, atWallPerMiner, atWallFleet };
   });
 
   const rows1U = allRows.filter(r => r.m.form === '1U').sort((a,b) => b.irrNoB - a.irrNoB);
@@ -1295,6 +1346,7 @@ function buildIRRTable(btc, zar, btcG, diffG, opexMon, solarCap, battOn) {
       <td style="padding:7px 8px;text-align:right;color:var(--muted)">${r.m.hash.toLocaleString()}</td>
       <td style="padding:7px 8px;text-align:right;color:var(--muted)">${(r.m.kw/r.m.hash*1000).toFixed(1)}</td>
       <td style="padding:7px 8px;text-align:right;color:var(--muted);white-space:nowrap">${r.n}&thinsp;&times;&thinsp;R${Math.round(r.m.cost/1000)}k</td>
+      <td style="padding:7px 8px;text-align:right;font-family:var(--mono);color:var(--text);white-space:nowrap">${r.atWallPerMiner}&thinsp;kW<span style="font-size:9px;color:var(--muted);margin-left:3px">(${r.atWallFleet}kW)</span></td>
       <td style="padding:7px 8px;text-align:right;font-family:var(--mono);color:var(--muted);font-size:10px">R${(r.infraCap/1e6).toFixed(2)}M</td>
       <td style="padding:7px 8px;text-align:right;font-family:var(--mono);color:var(--text)">R${(r.capNoB/1e6).toFixed(2)}M</td>
       <td style="padding:7px 8px;text-align:right;font-family:var(--mono);color:var(--text)">R${(r.capWiB/1e6).toFixed(2)}M</td>
@@ -1306,7 +1358,7 @@ function buildIRRTable(btc, zar, btcG, diffG, opexMon, solarCap, battOn) {
   }
 
   function divRow(label, cost) {
-    return `<tr style="background:rgba(255,255,255,0.03)"><td colspan="14" style="padding:5px 10px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)">${label}<span style="color:var(--gold);margin-left:8px">${cost} hosting</span></td></tr>`;
+    return `<tr style="background:rgba(255,255,255,0.03)"><td colspan="15" style="padding:5px 10px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)">${label}<span style="color:var(--gold);margin-left:8px">${cost} hosting</span></td></tr>`;
   }
 
   tbody.innerHTML =
@@ -2048,13 +2100,14 @@ function drawCapexBar(solarCap, infraCap, minerCost, n, battOn) {
   const battery = battOn ? BATT_CAPEX : 0;
   const total   = solarCap + miners + infraCap + battery;
 
+  const _t = (k, fb) => (typeof TRANSLATIONS !== 'undefined' && TRANSLATIONS[currentLang] && TRANSLATIONS[currentLang][k]) ? TRANSLATIONS[currentLang][k] : fb;
   const segments = [
-    { label: 'Panels',         value: panelCost,    color: '#f0a020' },
-    { label: 'Inverters',      value: inverterCost, color: '#f0c040' },
-    { label: 'BOS',            value: bosCost,      color: '#c07010', title: 'Balance of System — mounting · cabling · civil · labour' },
-    { label: 'Mining Fleet',   value: miners,       color: '#00d4aa' },
-    { label: 'Infrastructure', value: infraCap,     color: '#60a5fa' },
-    { label: 'Battery',        value: battery,      color: '#a78bfa', hide: !battOn },
+    { key:'seg_panels',    label: _t('seg_panels','Panels'),         value: panelCost,    color: '#f0a020' },
+    { key:'seg_inverters', label: _t('seg_inverters','Inverters'),   value: inverterCost, color: '#f0c040' },
+    { key:'seg_bos',       label: _t('seg_bos','BOS'),               value: bosCost,      color: '#c07010' },
+    { key:'seg_fleet',     label: _t('seg_fleet','Mining Fleet'),    value: miners,       color: '#00d4aa' },
+    { key:'seg_infra',     label: _t('seg_infra','Infrastructure'),  value: infraCap,     color: '#60a5fa' },
+    { key:'seg_battery',   label: _t('seg_battery','Battery'),       value: battery,      color: '#a78bfa', hide: !battOn },
   ].filter(s => !s.hide && s.value > 0);
 
   const fmt = v => 'R\u00a0' + (v >= 1e6 ? (v/1e6).toFixed(2)+'M' : Math.round(v/1000)+'k');
@@ -2062,25 +2115,25 @@ function drawCapexBar(solarCap, infraCap, minerCost, n, battOn) {
   const activeMiner = MINERS[(document.getElementById('minerSelect')||{value:'s23'}).value] || MINERS.s23;
   const is3U = (document.getElementById('form3U')||{checked:false}).checked;
   const notes = {
-    'Panels':         '1,700 × Aiko 650W · R1.95/Wp · 1,105 kWp DC',
-    'Inverters':      '7 × Huawei SUN2000 150kW · R0.70/Wp AC',
-    'BOS':            'Mounting · cabling · civil · labour · commissioning',
-    'Mining Fleet':   `${n} × ${activeMiner.label} · ${activeMiner.kw.toFixed(3)} kW · ${(activeMiner.kw/activeMiner.hash*1000).toFixed(1)} J/TH · ${Math.round(n*activeMiner.kw)} kW load`,
-    'Infrastructure': is3U
-      ? 'Lian Li 5-rack + CDU + dry cooler · R1.24M landed'
-      : 'Antspace HW5 · R2.04M landed · logistics + VAT included',
-    'Battery':        `${Math.round(BATT_CAPEX/4000)} kWh LFP · R4,000/kWh installed`,
+    'seg_panels':     _t('note_panels','1,700 × Aiko 650W · R1.95/Wp · 1,105 kWp DC'),
+    'seg_inverters':  _t('note_inverters','7 × Huawei SUN2000 150kW · R0.70/Wp AC'),
+    'seg_bos':        _t('note_bos','Mounting · cabling · civil · labour · commissioning'),
+    'seg_fleet':     `${n} × ${activeMiner.label} · ${activeMiner.kw.toFixed(3)} kW · ${(activeMiner.kw/activeMiner.hash*1000).toFixed(1)} J/TH · ${Math.round(n*activeMiner.kw)} ${_t('kwLoad','kW load')}`,
+    'seg_infra':     is3U
+      ? _t('note_infra3u','Lian Li 5-rack + CDU + dry cooler · R1.24M landed')
+      : _t('note_infra1u','Antspace HW5 · R2.04M landed · logistics + VAT included'),
+    'seg_battery':   `${Math.round(BATT_CAPEX/4000)} kWh LFP · R4,000/${_t('kwhInstalled','kWh installed')}`,
   };
 
   // Bar
   barEl.innerHTML = segments.map(s => {
     const pct  = (s.value / total * 100).toFixed(2);
-    const note = notes[s.label] || '';
+    const note = notes[s.key] || '';
     return `<div class="capex-seg" style="width:${pct}%;background:${s.color}">
       <div class="tip">
         <div class="tip-label">${s.label}</div>
         <div class="tip-value">${fmt(s.value)}</div>
-        <div class="tip-pct">${pct}% of total capex</div>
+        <div class="tip-pct">${pct}% ${_t("ofTotalCapex","of total capex")}</div>
         ${note ? `<div class="tip-note">${note}</div>` : ''}
       </div>
     </div>`;
@@ -2145,6 +2198,43 @@ function autoSetMiners() {
 
 // ── LIVE PRICE FEED ──────────────────────────────────────────────
 let livePriceInterval = null;
+
+async function snapToSpot(which) {
+  // Flash the button gold while fetching
+  const btnId  = which === 'btc' ? 'btcSpotBtn' : 'zarSpotBtn';
+  const btn    = document.getElementById(btnId);
+  if (btn) { btn.style.color = 'var(--gold)'; btn.style.borderColor = 'var(--gold)'; btn.textContent = '⟳ …'; }
+
+  try {
+    const res  = await fetch('https://wpfbvrpbhujvomzrnfev.supabase.co/functions/v1/prices', { cache: 'no-store' });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+
+    if (which === 'btc') {
+      const el  = document.getElementById('btcPrice');
+      const val = Math.min(300000, Math.max(20000, data.btc));
+      el.value  = val;
+      el.style.setProperty('--pct', ((val - +el.min) / (+el.max - +el.min) * 100) + '%');
+      (document.getElementById('btcPriceDisplay')||{firstChild:{}}).firstChild.textContent = '$' + (val/1000).toFixed(0) + 'k ';
+    } else {
+      const el  = document.getElementById('zarRate');
+      const val = Math.min(30, Math.max(10, data.zar));
+      el.value  = val;
+      el.style.setProperty('--pct', ((val - +el.min) / (+el.max - +el.min) * 100) + '%');
+      (document.getElementById('zarRateDisplay')||{firstChild:{}}).firstChild.textContent = 'R' + val.toFixed(1) + ' ';
+    }
+    recalc();
+    if (btn) { btn.style.color = 'var(--green)'; btn.style.borderColor = 'var(--green)'; btn.textContent = '✓ Live'; }
+    setTimeout(() => {
+      if (btn) { btn.style.color = 'var(--muted)'; btn.style.borderColor = 'var(--border2)'; btn.textContent = '⟳ Spot'; }
+    }, 2000);
+  } catch (err) {
+    if (btn) { btn.style.color = 'var(--red)'; btn.style.borderColor = 'var(--red)'; btn.textContent = '✗ Fail'; }
+    setTimeout(() => {
+      if (btn) { btn.style.color = 'var(--muted)'; btn.style.borderColor = 'var(--border2)'; btn.textContent = '⟳ Spot'; }
+    }, 2000);
+  }
+}
 
 async function fetchLivePrices() {
   const dot    = document.getElementById('liveDot');
@@ -2229,8 +2319,395 @@ recalc();
 buildTOU('summer');
 loadSavedDefaults();
 startLiveFeed();
+applyLang('en'); // set initial language class + colours
 
 }); // end DOMContentLoaded
+
+// ── i18n TRANSLATION SYSTEM ──────────────────────────────────────
+let currentLang = 'en';
+
+const TRANSLATIONS = {
+  en: {
+    btcPrice:         'BTC Price',
+    zarRate:          'ZAR Rate (R per $)',
+    hashprice:        'Hashprice',
+    keyMetrics:       'Key Metrics',
+    projectParams:    'Project Parameters',
+    threeStreams:     'Solar Monetisation · Three Revenue Streams',
+    touSchedule:      'City Power TOU Schedule · Weekly',
+    fixedAssumptions: 'Fixed Assumptions',
+    irrByMiner:       'Project IRR by Miner Model',
+    totalCapex:       'Total Capex',
+    solarMinersInfra: 'Solar + Miners + Infra',
+    year1Rev:         'Year 1 Revenue',
+    grossZAR:         'Gross ZAR',
+    year1Net:         'Year 1 Net',
+    afterOpex:        'After opex',
+    simplePayback:    'Simple Payback',
+    years:            'Years',
+    tenYrIRR:         '10-Year IRR',
+    irrDef:           'Internal rate of return',
+    tenYrNet:         '10-Year Net Profit',
+    cumAfterCapex:    'Cumulative after capex',
+    btcPriceSlider:   'BTC Price (USD)',
+    zarUSD:           'ZAR / USD Rate (R per $)',
+    minerCount:       'Miners',
+    costPerMiner:     'Cost per Miner (landed)',
+    solarCapex:       'Solar Plant Capex',
+    infraCapex:       'Infrastructure Capex',
+    monthlyOpex:      'Monthly Opex',
+    sysEff:           'System Efficiency',
+    netSpread:        'Net BTC/Difficulty Spread',
+    solarPlant:       'Solar Plant',
+    minerSpec:        'Miner Spec',
+    revenueModel:     'Revenue Model',
+    irrMethod:        'IRR Method',
+    irrSubtitle:      'All scenarios use current dashboard slider values · solar-only · no battery · 10-year horizon',
+    form3U:           '3U',
+    coolingNote:      'Cooling · racks · wiring · civil',
+    irrMethodVal:     '10-year NPV · discount rate 10% · ZAR nominal · no terminal value',
+    // Battery banner
+    effect:           'Effect',
+    battDesc:         'Toggle ON to add battery — stores midday solar surplus, extends mining into evening (~3.5h extra/day)',
+    // Stream 1
+    s1Tag:            'Stream 1 · Always On',
+    s1Title:          'Displace Grid',
+    s1Desc:           'Solar covers warehouse electricity during daylight hours. Saves peak + standard tariff costs directly off the bill.',
+    annualSaving:     'ANNUAL SAVING',
+    type:             'TYPE',
+    s1Type:           'Bill saving\nGuaranteed',
+    s1Note:           '30 kW warehouse · peak R3.40 + std R2.56 displaced · ~3% of plant capacity',
+    // Stream 2
+    s2Tag:            'Stream 2 · Limited',
+    s2Title:          'Sell Back (SSEG)',
+    s2Desc:           'Net metering bill credit via City Power SSEG. Capped at your own consumption — cannot earn cash for excess solar.',
+    annualCredit:     'ANNUAL CREDIT',
+    type2:            'TYPE',
+    s2Type:           'Bill credit\nNot cash',
+    s2Note:           '87% of plant output has nowhere to go · wholesale WEPS rate only · complex City Power approval',
+    // Stream 3
+    s3Tag:            'Stream 3 · Primary',
+    s3Title:          'Bitcoin Mining',
+    s3Desc:           "Miners consume all surplus solar the warehouse doesn't need. Converts excess kWh directly to BTC at full plant capacity.",
+    annualNet:        'ANNUAL NET',
+    type3:            'TYPE',
+    s3Type:           'Cash revenue\nBTC price risk',
+    s3Note:           '~97% of plant capacity · solar hours only · uses dashboard miner count',
+    // Combined
+    combinedTag:      'Combined · All Streams',
+    totalReturn:      'Total Return',
+    displacement:     'Displacement',
+    ssegCredit:       'SSEG credit',
+    bitcoinMining:    'Bitcoin mining',
+    totalAnnual:      'Total Annual',
+    solarPayback:     'Solar payback:',
+    // Charts
+    annualCashFlow:   'Annual Cash Flow · 10yr',
+    cumulativeReturn: 'Cumulative Return',
+    dailyEnergy:      'Daily Energy Balance',
+    // Banners
+    gridMining:       'Grid Mining (Off-Peak)',
+    battStorage:      'Battery Storage',
+    // Capex bar
+    capexBreakdown:   'Capex Breakdown',
+    ofTotalCapex:     'of total capex',
+    seg_panels:       'Panels',
+    seg_inverters:    'Inverters',
+    seg_bos:          'BOS',
+    seg_fleet:        'Mining Fleet',
+    seg_infra:        'Infrastructure',
+    seg_battery:      'Battery',
+    note_panels:      '1,700 × Aiko 650W · R1.95/Wp · 1,105 kWp DC',
+    note_inverters:   '7 × Huawei SUN2000 150kW · R0.70/Wp AC',
+    note_bos:         'Mounting · cabling · civil · labour · commissioning',
+    note_infra3u:     'Lian Li 5-rack + CDU + dry cooler · R1.24M landed',
+    note_infra1u:     'Antspace HW5 · R2.04M landed · logistics + VAT included',
+    kwLoad:           'kW load',
+    kwhInstalled:     'kWh installed',
+  },
+  zh: {
+    btcPrice:         'BTC价格',
+    zarRate:          '汇率 ZAR（兰特/美元）',
+    hashprice:        '算力价格',
+    keyMetrics:       '关键指标',
+    projectParams:    '项目参数',
+    threeStreams:     '太阳能变现 · 三种收益来源',
+    touSchedule:      '城市电力分时电价 · 周计划',
+    fixedAssumptions: '固定假设',
+    irrByMiner:       '各矿机型号项目内部收益率',
+    totalCapex:       '总资本支出',
+    solarMinersInfra: '光伏 + 矿机 + 基础设施',
+    year1Rev:         '第一年收入',
+    grossZAR:         '兰特总收入',
+    year1Net:         '第一年净利润',
+    afterOpex:        '扣除运营成本后',
+    simplePayback:    '简单回收期',
+    years:            '年',
+    tenYrIRR:         '10年内部收益率',
+    irrDef:           '内部收益率',
+    tenYrNet:         '10年净利润',
+    cumAfterCapex:    '扣除资本支出后累计',
+    btcPriceSlider:   'BTC价格（美元）',
+    zarUSD:           '兰特/美元汇率（R/$）',
+    minerCount:       '矿机数量',
+    costPerMiner:     '每台矿机成本（到岸价）',
+    solarCapex:       '光伏电站投资',
+    infraCapex:       '基础设施投资',
+    monthlyOpex:      '月度运营成本',
+    sysEff:           '系统效率',
+    netSpread:        'BTC/难度净价差',
+    solarPlant:       '光伏电站',
+    minerSpec:        '矿机规格',
+    revenueModel:     '收益模型',
+    irrMethod:        '内部收益率方法',
+    irrSubtitle:      '所有方案均采用当前仪表板滑块值 · 纯光伏 · 无储能 · 10年期',
+    form3U:           '3U机架',
+    coolingNote:      '冷却 · 机架 · 布线 · 基建',
+    irrMethodVal:     '10年净现值 · 折现率10% · 南非兰特名义值 · 无终值',
+    // Battery banner
+    effect:           '效果',
+    battDesc:         '开启储能 — 存储中午多余太阳能，将挖矿延伸至傍晚（约每天延长3.5小时）',
+    // Stream 1
+    s1Tag:            '收益流1 · 持续稳定',
+    s1Title:          '替代电网用电',
+    s1Desc:           '太阳能在白天为仓库供电，节省峰值与标准电费，直接从账单中扣减。',
+    annualSaving:     '年度节省',
+    type:             '类型',
+    s1Type:           '账单节省\n有保障',
+    s1Note:           '30千瓦仓库 · 峰值R3.40 + 标准R2.56已替代 · 约占装机容量3%',
+    // Stream 2
+    s2Tag:            '收益流2 · 有限制',
+    s2Title:          '回馈电网（SSEG）',
+    s2Desc:           '通过城市电力SSEG净计量账单抵扣。上限为自身用电量 — 不能为多余太阳能获得现金。',
+    annualCredit:     '年度抵扣',
+    type2:            '类型',
+    s2Type:           '账单抵扣\n非现金',
+    s2Note:           '87%装机出力无处消纳 · 仅批发WEPS电价 · 城市电力审批复杂',
+    // Stream 3
+    s3Tag:            '收益流3 · 主要来源',
+    s3Title:          '比特币挖矿',
+    s3Desc:           '矿机消耗仓库不需要的全部多余太阳能，以全装机容量将多余电量直接转化为BTC。',
+    annualNet:        '年度净收入',
+    type3:            '类型',
+    s3Type:           '现金收入\nBTC价格风险',
+    s3Note:           '约97%装机容量 · 仅限光伏时段 · 使用仪表板矿机数量',
+    // Combined
+    combinedTag:      '综合 · 全部收益流',
+    totalReturn:      '总收益',
+    displacement:     '电费替代',
+    ssegCredit:       'SSEG抵扣',
+    bitcoinMining:    '比特币挖矿',
+    totalAnnual:      '年度合计',
+    solarPayback:     '光伏回本期：',
+    // Charts
+    annualCashFlow:   '年度现金流 · 10年',
+    cumulativeReturn: '累计收益',
+    dailyEnergy:      '每日能源平衡',
+    // Banners
+    gridMining:       '电网挖矿（谷时）',
+    battStorage:      '储能系统',
+    // Capex bar
+    capexBreakdown:   '资本支出明细',
+    ofTotalCapex:     '占总资本支出',
+    seg_panels:       '光伏板',
+    seg_inverters:    '逆变器',
+    seg_bos:          '平衡系统',
+    seg_fleet:        '矿机机队',
+    seg_infra:        '基础设施',
+    seg_battery:      '储能',
+    note_panels:      '1,700块 × Aiko 650W · R1.95/Wp · 1,105 kWp直流',
+    note_inverters:   '7台 × 华为SUN2000 150kW · R0.70/Wp交流',
+    note_bos:         '安装 · 线缆 · 土建 · 人工 · 调试',
+    note_infra3u:     '联力5机架 + CDU + 干式冷却器 · 到岸R1.24M',
+    note_infra1u:     'Antspace HW5 · 到岸R2.04M · 含物流及增值税',
+    kwLoad:           '千瓦负载',
+    kwhInstalled:     '度/已安装',
+  },
+  gr: {
+    // Header
+    btcPrice:         'Τιμή BTC',
+    zarRate:          'Ισοτιμία ZAR (R ανά $)',
+    hashprice:        'Τιμή Κατακερματισμού',
+    // Sections
+    keyMetrics:       'Βασικοί Δείκτες',
+    projectParams:    'Παράμετροι Έργου',
+    threeStreams:     'Αξιοποίηση Ηλιακής Ενέργειας · Τρεις Ροές Εσόδων',
+    touSchedule:      'Χρονοτιμολόγηση City Power · Εβδομαδιαίο Πρόγραμμα',
+    fixedAssumptions: 'Σταθερές Παραδοχές',
+    irrByMiner:       'ΕΒΑ Έργου ανά Μοντέλο Εξορυκτή',
+    // KPIs
+    totalCapex:       'Συνολικό Κεφάλαιο',
+    solarMinersInfra: 'Φ/Β + Εξορυκτές + Υποδομή',
+    year1Rev:         'Έσοδα 1ου Έτους',
+    grossZAR:         'Μικτά ZAR',
+    year1Net:         'Καθαρά 1ου Έτους',
+    afterOpex:        'Μετά λειτουργικά έξοδα',
+    simplePayback:    'Απλή Περίοδος Αποπληρωμής',
+    years:            'Έτη',
+    tenYrIRR:         'ΕΒΑ 10ετίας',
+    irrDef:           'Εσωτερικός Βαθμός Απόδοσης',
+    tenYrNet:         'Καθαρό Κέρδος 10ετίας',
+    cumAfterCapex:    'Σωρευτικό μετά κεφάλαιο',
+    // Sliders
+    btcPriceSlider:   'Τιμή BTC (USD)',
+    zarUSD:           'Ισοτιμία ZAR / USD (R ανά $)',
+    minerCount:       'Αριθμός Εξορυκτών',
+    costPerMiner:     'Κόστος ανά Εξορυκτή (παραδοτέο)',
+    solarCapex:       'Κεφάλαιο Φ/Β Εγκατάστασης',
+    infraCapex:       'Κεφάλαιο Υποδομής',
+    monthlyOpex:      'Μηνιαία Λειτουργικά Έξοδα',
+    sysEff:           'Απόδοση Συστήματος',
+    netSpread:        'Καθαρό Spread BTC/Δυσκολία',
+    // Assumptions
+    solarPlant:       'Φ/Β Εγκατάσταση',
+    minerSpec:        'Προδιαγραφές Εξορυκτή',
+    revenueModel:     'Μοντέλο Εσόδων',
+    irrMethod:        'Μέθοδος ΕΒΑ',
+    irrMethodVal:     '10ετής ΚΠΑ · Προεξόφληση 10% · Ονομαστικά ZAR · Χωρίς υπολειμματική αξία',
+    irrSubtitle:      'Όλα τα σενάρια χρησιμοποιούν τρέχουσες τιμές · μόνο ηλιακή · χωρίς μπαταρία · 10ετής ορίζοντας',
+    form3U:           '3U',
+    coolingNote:      'Ψύξη · ικριώματα · καλωδίωση · πολιτικά',
+    // Battery
+    effect:           'Αποτέλεσμα',
+    battDesc:         'Ενεργοποιήστε για μπαταρία — αποθηκεύει πλεονάζον ηλιακό, επεκτείνει εξόρυξη τη νύχτα (~3.5h/μέρα)',
+    // Streams
+    s1Tag:            'Ροή 1 · Πάντα Ενεργή',
+    s1Title:          'Αντικατάσταση Δικτύου',
+    s1Desc:           'Η ηλιακή ενέργεια τροφοδοτεί την αποθήκη κατά τη διάρκεια της ημέρας. Εξοικονομεί κόστος αιχμής + κανονικής τιμολόγησης απευθείας από τον λογαριασμό.',
+    annualSaving:     'ΕΤΗΣΙΑ ΕΞΟΙΚΟΝΟΜΗΣΗ',
+    type:             'ΤΥΠΟΣ',
+    s1Type:           'Εξοικονόμηση λογαριασμού\nΕγγυημένη',
+    s1Note:           '30 kW αποθήκη · αιχμή R3.40 + τυπικό R2.56 · ~3% της εγκατεστημένης ισχύος',
+    s2Tag:            'Ροή 2 · Περιορισμένη',
+    s2Title:          'Πώληση στο Δίκτυο (SSEG)',
+    s2Desc:           'Πίστωση λογαριασμού μέσω net metering City Power SSEG. Ανώτατο όριο η ιδία κατανάλωση — δεν παράγει μετρητά για πλεονάζον ηλιακό.',
+    annualCredit:     'ΕΤΗΣΙΑ ΠΙΣΤΩΣΗ',
+    type2:            'ΤΥΠΟΣ',
+    s2Type:           'Πίστωση λογαριασμού\nΌχι μετρητά',
+    s2Note:           '87% της παραγωγής δεν έχει πού να πάει · μόνο χονδρική τιμή WEPS · πολύπλοκη έγκριση City Power',
+    s3Tag:            'Ροή 3 · Κύρια',
+    s3Title:          'Εξόρυξη Bitcoin',
+    s3Desc:           'Οι εξορυκτές καταναλώνουν όλο το πλεονάζον ηλιακό που δεν χρειάζεται η αποθήκη. Μετατρέπει το περίσσιο kWh σε BTC.',
+    annualNet:        'ΕΤΗΣΙΟ ΚΑΘΑΡΟ',
+    type3:            'ΤΥΠΟΣ',
+    s3Type:           'Έσοδα σε μετρητά\nΚίνδυνος τιμής BTC',
+    s3Note:           '~97% της εγκατεστημένης ισχύος · μόνο ηλιακές ώρες · χρησιμοποιεί αριθμό εξορυκτών',
+    combinedTag:      'Συνδυαστικά · Όλες οι Ροές',
+    totalReturn:      'Συνολική Απόδοση',
+    displacement:     'Αντικατάσταση',
+    ssegCredit:       'Πίστωση SSEG',
+    bitcoinMining:    'Εξόρυξη Bitcoin',
+    totalAnnual:      'Ετήσιο Σύνολο',
+    solarPayback:     'Αποπληρωμή ηλιακής:',
+    // Charts
+    annualCashFlow:   'Ετήσιες Ταμειακές Ροές · 10ετία',
+    cumulativeReturn: 'Σωρευτική Απόδοση',
+    dailyEnergy:      'Ημερήσια Ισορροπία Ενέργειας',
+    gridMining:       'Εξόρυξη Δικτύου (Εκτός Αιχμής)',
+    battStorage:      'Αποθήκευση Ενέργειας',
+    // Capex bar
+    capexBreakdown:   'Ανάλυση Κεφαλαίου',
+    ofTotalCapex:     'του συνολικού κεφαλαίου',
+    seg_panels:       'Φωτοβολταϊκά',
+    seg_inverters:    'Μετατροπείς',
+    seg_bos:          'Βοηθητικός Εξοπλισμός',
+    seg_fleet:        'Στόλος Εξορυκτών',
+    seg_infra:        'Υποδομή',
+    seg_battery:      'Μπαταρία',
+    note_panels:      '1.700 × Aiko 650W · R1.95/Wp · 1.105 kWp DC',
+    note_inverters:   '7 × Huawei SUN2000 150kW · R0.70/Wp AC',
+    note_bos:         'Στήριξη · καλωδίωση · πολιτικά · εργασία · θέση σε λειτουργία',
+    note_infra3u:     'Lian Li 5 ικριώματα + CDU + ξηρός ψύκτης · R1.24M παραδοτέο',
+    note_infra1u:     'Antspace HW5 · R2.04M παραδοτέο · συμπ. logistics + ΦΠΑ',
+    kwLoad:           'kW φορτίο',
+    kwhInstalled:     'kWh εγκατεστημένο',
+  }
+};
+
+// IRR table column headers (built dynamically — translate via JS)
+const IRR_TABLE_HEADERS = {
+  en: ['Model','Form','TH/s','J/TH','Fleet','At Wall','Hosting','Capex','+Batt','Y1 Rev','No Battery · IRR / Payback','With Battery · IRR / Payback','Batt Δ'],
+  zh: ['型号','规格','算力(TH/s)','能效','机队','墙壁功率','托管费用','资本支出','+储能','第一年收入','无储能 · 收益率/回本','含储能 · 收益率/回本','储能增益'],
+  gr: ['Μοντέλο','Τύπος','TH/s','J/TH','Στόλος','Τοίχος kW','Φιλοξενία','Κεφάλαιο','+Μπαταρία','Έσοδα Ε1','Χωρίς Μπαταρία · ΕΒΑ / Αποπλ.','Με Μπαταρία · ΕΒΑ / Αποπλ.','Δ Μπαταρία'],
+};
+
+function applyLang(lang) {
+  currentLang = lang;
+  const dict = TRANSLATIONS[lang];
+
+  // Toggle body classes for CSS-driven coloured text
+  document.body.classList.toggle('lang-zh', lang === 'zh');
+  document.body.classList.toggle('lang-gr', lang === 'gr');
+  document.body.classList.toggle('lang-en', lang === 'en');
+
+  // Translate all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (dict[key]) el.textContent = dict[key];
+  });
+
+  // Update flag buttons — highlight active, dim inactive
+  const btnEN = document.getElementById('langEN');
+  const btnZH = document.getElementById('langZH');
+  const btnGR = document.getElementById('langGR');
+  [['langEN','en'],['langZH','zh'],['langGR','gr']].forEach(([id, l]) => {
+    const b = document.getElementById(id);
+    if (b) {
+      b.style.background = lang === l ? 'var(--gold)' : 'transparent';
+      b.style.opacity    = lang === l ? '1' : '0.4';
+    }
+  });
+
+  // Legacy single button (kept for safety)
+  const btn = document.getElementById('langToggle');
+  if (btn) btn.textContent = lang === 'en' ? '🇬🇧' : lang === 'zh' ? '🇨🇳' : '🇬🇷';
+
+  // Update logo
+  const logo = document.querySelector('.logo');
+  if (logo) logo.innerHTML = lang === 'zh'
+    ? '⚡ 太阳<span>哈希</span> · 收益分析'
+    : lang === 'gr'
+    ? '⚡ ΗΛΙΑΚΟ<span>HASH</span> · ΑΝΑΛΥΣΗ ΑΠΔ'
+    : '⚡ SOLAR<span>HASH</span> · MASTER IRR';
+
+  // Update IRR table header if it exists
+  rebuildIRRTableHeader(lang);
+  // Redraw capex bar so legend labels and tooltip notes update
+  if (typeof recalc === 'function') recalc();
+}
+
+function rebuildIRRTableHeader(lang) {
+  const thead = document.querySelector('#irrTable thead tr');
+  if (!thead) return;
+  const headers = IRR_TABLE_HEADERS[lang];
+  const cells   = thead.querySelectorAll('th');
+  // Map headers to cells — some cells use colspan=2
+  const cellMap = [0,1,2,3,4,5,6,7,8,9,11,13,14]; // indices skipping colspan sub-cells
+  cells[0].textContent = headers[0];  // Model
+  cells[1].textContent = headers[1];  // Form
+  cells[2].textContent = headers[2];  // TH/s
+  cells[3].textContent = headers[3];  // J/TH
+  cells[4].textContent = headers[4];  // Fleet
+  cells[5].textContent = headers[5];  // At Wall
+  cells[6].textContent = headers[6];  // Hosting
+  cells[7].textContent = headers[7];  // Capex
+  cells[8].textContent = headers[8];  // +Batt
+  cells[9].textContent  = headers[9]; // Y1 Rev
+  if (cells[10]) cells[10].textContent = headers[10]; // No Battery (colspan)
+  if (cells[11]) cells[11].textContent = headers[11]; // With Battery (colspan)
+  if (cells[12]) cells[12].textContent = headers[12]; // Batt delta
+}
+
+function toggleLang() {
+  // Brief fade out → switch → fade in
+  document.querySelectorAll('[data-i18n]').forEach(el => el.style.opacity = '0');
+  setTimeout(() => {
+    applyLang(currentLang === 'en' ? 'zh' : 'en');
+    document.querySelectorAll('[data-i18n]').forEach(el => el.style.opacity = '1');
+  }, 150);
+}
+
+
 </script>
 </body>
 </html>
