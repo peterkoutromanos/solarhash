@@ -268,6 +268,16 @@ canvas { display: block; width: 100%; }
     </div>
   </div>
 
+  <!-- ── CAPEX BAR ── -->
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 16px;margin-bottom:16px">
+    <div style="display:flex;align-items:baseline;gap:12px;margin-bottom:10px">
+      <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:var(--mono)">Capex Breakdown</div>
+      <div style="font-family:var(--display);font-size:22px;font-weight:700;color:var(--text)" id="capexBarTotal">—</div>
+    </div>
+    <div id="capexBar" style="display:flex;height:28px;border-radius:3px;overflow:hidden;margin-bottom:8px"></div>
+    <div id="capexLegend" style="display:flex;flex-wrap:wrap;gap:12px"></div>
+  </div>
+
   <!-- ── INPUTS ── -->
   <div class="section-title">Project Parameters</div>
   <div class="input-grid">
@@ -318,15 +328,20 @@ canvas { display: block; width: 100%; }
     </div>
 
     <div class="input-cell">
-      <div class="input-label" style="display:flex;justify-content:space-between">
+      <div class="input-label" style="display:flex;justify-content:space-between;align-items:center">
         <span>Cost per Miner (landed)</span>
-        
+        <select id="minerSelect" onchange="applyMinerChoice(this.value)"
+          style="font-size:10px;padding:2px 4px;border-radius:4px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;max-width:120px">
+          <option value="s23">S23 Hyd</option>
+          <option value="s21">S21 Hyd</option>
+          <option value="s19">S19 XP+ Hyd</option>
+        </select>
       </div>
       <div id="minerCostDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">R250k<span style="font-size:11px;color:var(--muted);margin-left:4px">ZAR</span></div>
-      <input type="range" id="minerCost" min="100000" max="600000" value="250000" step="10000"
+      <input type="range" id="minerCost" min="10000" max="600000" value="250000" step="1000"
         oninput="(document.getElementById('minerCostDisplay')||{firstChild:{}}).firstChild.textContent ='R'+(+this.value/1000).toFixed(0)+'k ';updateFleetCost();updateRange(this,'','');recalc()"
         style="width:100%;margin-top:6px">
-      <div class="range-labels"><span>R100k</span><span>R350k</span><span>R600k</span></div>
+      <div class="range-labels"><span>R10k</span><span>R300k</span><span>R600k</span></div>
       <div style="margin-top:5px;font-size:9px;color:var(--muted)">Fleet total: <span id="fleetCostTotal" style="color:var(--gold)">—</span></div>
     </div>
 
@@ -825,9 +840,14 @@ function toggleGrid() {
 
 // ── CONSTANTS ────────────────────────────────────────────────────
 const REV_PER_TH_BASE = 24.931 / 860 / 68000; // calibrated at $68k BTC
-const MINER_HASH      = 1160;   // TH/s per S23 standard
-const MINER_KW        = 11.02;  // kW per miner
 const UPTIME          = 0.99;
+const MINERS = {
+  s23: { label:'S23 Hyd',     hash:580,  kw:5.51,  cost:250000 },
+  s21: { label:'S21 Hyd',     hash:480,  kw:5.30,  cost:150000 },
+  s19: { label:'S19 XP+ Hyd', hash:293,  kw:3.30,  cost:32000  },
+};
+let MINER_HASH = MINERS.s23.hash;
+let MINER_KW   = MINERS.s23.kw;
 const SOLAR_KWH_DAY   = 4000;   // usable solar kWh/day after warehouse load
 const SOLAR_HOURS_DAY = SOLAR_KWH_DAY / (1050 * 0.88); // effective hours at full AC
 // Profile: how many hours per day the fleet can run at full power from solar
@@ -950,6 +970,20 @@ function updateRange(el, valId, suffix) {
 }
 
 // ── MAIN RECALC ──────────────────────────────────────────────────
+function applyMinerChoice(key) {
+  const m = MINERS[key];
+  if (!m) return;
+  MINER_HASH = m.hash;
+  MINER_KW   = m.kw;
+  const slider = document.getElementById('minerCost');
+  const disp   = document.getElementById('minerCostDisplay');
+  if (slider) { slider.value = m.cost; }
+  if (disp)   { disp.firstChild.textContent = 'R' + (m.cost/1000).toFixed(0) + 'k '; }
+  updateFleetCost();
+  autoSetMiners();
+  recalc();
+}
+
 function recalc() {
   const btc       = +(document.getElementById('btcPrice').value) || 83000;
   const zar       = +(document.getElementById('zarRate').value) || 18.5;
@@ -1037,6 +1071,7 @@ function recalc() {
   drawEnergyBar(n, btc, zar, gridMiningOn, gridRate, batteryOn);
   calcThreeStreams(n, btc, zar, opexMon);
   updateFleetCost();
+  drawCapexBar(solarCap, infraCap, minerCost, n, batteryOn);
 }
 
 // ── CASHFLOW CHART ───────────────────────────────────────────────
@@ -1564,6 +1599,7 @@ const FACTORY_DEFAULTS = {
   zarRate:     '18.5',
   nMiners:     '61',
   minerCost:   '250000',
+  minerModel:  's23',
   solarCapex:  '8500000',
   infraCapex:  '3200000',
   monthlyOpex: '45000',
@@ -1580,6 +1616,7 @@ function getInputValues() {
     zarRate:     document.getElementById('zarRate').value,
     nMiners:     document.getElementById('nMiners').value,
     minerCost:   document.getElementById('minerCost').value,
+    minerModel:  (document.getElementById('minerSelect')||{value:'s23'}).value,
     solarCapex:  document.getElementById('solarCapex').value,
     infraCapex:  document.getElementById('infraCapex').value,
     monthlyOpex: document.getElementById('monthlyOpex').value,
@@ -1624,6 +1661,13 @@ function applyValues(vals) {
   // Toggles
   if (vals.gridOn !== gridMiningOn) toggleGrid();
   if (vals.battOn !== batteryOn)    toggleBatt();
+  // Miner dropdown
+  if (vals.minerModel) {
+    const sel = document.getElementById('minerSelect');
+    if (sel) sel.value = vals.minerModel;
+    const m = MINERS[vals.minerModel];
+    if (m) { MINER_HASH = m.hash; MINER_KW = m.kw; }
+  }
   recalc();
 }
 
@@ -1737,6 +1781,56 @@ function calcThreeStreams(n, btc, zar, opexMon) {
   document.getElementById('s1BarFill').style.width = (s1/maxS*100).toFixed(1)+'%';
   document.getElementById('s2BarFill').style.width = (s2/maxS*100).toFixed(1)+'%';
   document.getElementById('s3BarFill').style.width = (s3/maxS*100).toFixed(1)+'%';
+}
+
+// ── CAPEX BAR ────────────────────────────────────────────────────
+function drawCapexBar(solarCap, infraCap, minerCost, n, battOn) {
+  const barEl    = document.getElementById('capexBar');
+  const legendEl = document.getElementById('capexLegend');
+  const totalEl  = document.getElementById('capexBarTotal');
+  if (!barEl || !legendEl || !totalEl) return;
+
+  // Decompose solar into panels / inverters / BOS
+  // Based on 1,700 × Aiko 650W @ R1.95/Wp panels, R0.70/Wp inverters, remainder = BOS
+  const KWP          = 1105; // kWp DC
+  const panelCost    = 1700 * 650 * 1.95;        // R2.15M
+  const inverterCost = KWP  * 1000 * 0.70;       // R0.77M
+  const bosCost      = Math.max(0, solarCap - panelCost - inverterCost); // remainder
+
+  const miners  = n * minerCost;
+  const battery = battOn ? BATT_CAPEX : 0;
+  const total   = solarCap + miners + infraCap + battery;
+
+  const segments = [
+    { label: 'Panels',         value: panelCost,    color: '#f0a020' },
+    { label: 'Inverters',      value: inverterCost, color: '#f0c040' },
+    { label: 'BOS',            value: bosCost,      color: '#c07010', title: 'Balance of System — mounting · cabling · civil · labour' },
+    { label: 'Mining Fleet',   value: miners,       color: '#00d4aa' },
+    { label: 'Infrastructure', value: infraCap,     color: '#60a5fa' },
+    { label: 'Battery',        value: battery,      color: '#a78bfa', hide: !battOn },
+  ].filter(s => !s.hide && s.value > 0);
+
+  const fmt = v => 'R\u00a0' + (v >= 1e6 ? (v/1e6).toFixed(2)+'M' : Math.round(v/1000)+'k');
+
+  // Bar
+  barEl.innerHTML = segments.map(s => {
+    const pct = (s.value / total * 100).toFixed(2);
+    return `<div title="${s.title || s.label}: ${fmt(s.value)} (${pct}%)"
+      style="width:${pct}%;background:${s.color};transition:width 0.4s;cursor:default"></div>`;
+  }).join('');
+
+  // Legend
+  legendEl.innerHTML = segments.map(s => {
+    const pct = (s.value / total * 100).toFixed(1);
+    return `<div style="display:flex;align-items:center;gap:5px;font-size:9px;color:var(--muted)">
+      <div style="width:10px;height:10px;border-radius:2px;background:${s.color};flex-shrink:0"></div>
+      <span>${s.label}</span>
+      <span style="color:var(--text);font-family:var(--mono)">${fmt(s.value)}</span>
+      <span>${pct}%</span>
+    </div>`;
+  }).join('');
+
+  totalEl.textContent = fmt(total);
 }
 
 // ── AUTO MINER SOLVER ────────────────────────────────────────────
