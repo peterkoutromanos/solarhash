@@ -368,7 +368,7 @@ body.lang-gr [data-i18n] { color: #4db8ff; }
     </div>
 
     <div class="input-cell">
-      <div class="input-label" data-i18n="minerCount">S23 Miners</div>
+      <div class="input-label" data-i18n="minerCount">Miners</div>
       <div id="nMinersDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--text);line-height:1;margin:6px 0 2px">61<span style="font-size:11px;color:var(--muted);margin-left:4px" data-i18n="units">units</span></div>
       <input type="range" id="nMiners" min="1" max="150" value="61" step="1"
         oninput="(document.getElementById('nMinersDisplay')||{firstChild:{}}).firstChild.textContent =this.value+' ';updateRange(this,'','');recalc()"
@@ -390,24 +390,36 @@ body.lang-gr [data-i18n] { color: #4db8ff; }
       <div class="input-label" style="display:flex;justify-content:space-between;align-items:center;gap:6px">
         <span style="white-space:nowrap" data-i18n="costPerMiner">Cost per Miner (landed)</span>
         <div style="display:flex;align-items:center;gap:6px;flex-shrink:0">
-          <label style="display:flex;align-items:center;gap:3px;font-size:9px;color:var(--muted);cursor:pointer;white-space:nowrap">
-            <input type="checkbox" id="form3U" onchange="toggleFormFactor()"
-              style="cursor:pointer;accent-color:var(--gold);width:11px;height:11px">
-            <span data-i18n="form3U">3U</span>
-          </label>
+          <div style="display:flex;align-items:center;gap:2px;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:2px">
+            <button id="coolHydro" onclick="setCoolingMode('hydro')"
+              style="font-size:8px;padding:2px 7px;border-radius:3px;cursor:pointer;border:none;
+                     font-family:var(--mono);letter-spacing:1px;text-transform:uppercase;
+                     background:var(--gold);color:#080b0f;transition:all 0.15s">Hydro</button>
+            <button id="cool3U" onclick="setCoolingMode('3u')"
+              style="font-size:8px;padding:2px 7px;border-radius:3px;cursor:pointer;border:none;
+                     font-family:var(--mono);letter-spacing:1px;text-transform:uppercase;
+                     background:transparent;color:var(--muted);transition:all 0.15s">3U</button>
+            <button id="coolAir" onclick="setCoolingMode('air')"
+              style="font-size:8px;padding:2px 7px;border-radius:3px;cursor:pointer;border:none;
+                     font-family:var(--mono);letter-spacing:1px;text-transform:uppercase;
+                     background:transparent;color:var(--muted);transition:all 0.15s">Air</button>
+          </div>
+          <!-- hidden checkbox kept for legacy compatibility -->
+          <input type="checkbox" id="form3U" style="display:none">
           <select id="minerSelect" onchange="applyMinerChoice(this.value)"
             style="font-size:11px;font-weight:600;padding:3px 6px;border-radius:4px;
                    border:1px solid var(--gold);background:rgba(240,160,32,0.08);
                    color:var(--gold);cursor:pointer;max-width:130px;
                    font-family:var(--mono);letter-spacing:0.5px">
-            <option value="s23">S23 Hyd</option>
-            <option value="s21">S21 Hyd</option>
-            <option value="s21p">S21+ Hyd 358</option>
-            <option value="s19">S19 XP+ Hyd</option>
+            <option value="s23">S23 Hyd · 580 TH/s · 9.5 J/TH</option>
+            <option value="s21">S21 Hyd · 480 TH/s · 11.0 J/TH</option>
+            <option value="s21p">S21+ Hyd 358 · 15.0 J/TH</option>
+            <option value="s21e">S21e Hyd 332 · 17.0 J/TH</option>
+            <option value="s19" selected>S19 XP+ Hyd · 293 TH/s · 19.0 J/TH</option>
           </select>
         </div>
       </div>
-      <div id="minerCostDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--gold);line-height:1;margin:6px 0 2px;text-shadow:0 0 20px rgba(240,160,32,0.3)">R250k<span style="font-size:11px;color:var(--muted);margin-left:4px">ZAR</span></div>
+      <div id="minerCostDisplay" style="font-size:28px;font-family:var(--mono);font-weight:400;color:var(--gold);line-height:1;margin:6px 0 2px;text-shadow:0 0 20px rgba(240,160,32,0.3)">R32k<span style="font-size:11px;color:var(--muted);margin-left:4px">ZAR</span></div>
       <input type="range" id="minerCost" min="10000" max="600000" value="250000" step="1000"
         oninput="(document.getElementById('minerCostDisplay')||{firstChild:{}}).firstChild.textContent ='R'+(+this.value/1000).toFixed(0)+'k ';updateFleetCost();updateRange(this,'','');recalc()"
         style="width:100%;margin-top:6px">
@@ -851,6 +863,7 @@ body.lang-gr [data-i18n] { color: #4db8ff; }
           <th style="text-align:center;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase" data-i18n="colForm">Form</th>
           <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase">TH/s</th>
           <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase">J/TH</th>
+          <th style="text-align:right;padding:6px 8px;color:var(--text);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase">$/TH</th>
           <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase" data-i18n="colFleet">Fleet</th>
           <th style="text-align:right;padding:6px 8px;color:var(--text);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase">kW/unit</th>
           <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase" data-i18n="colHosting">Hosting</th>
@@ -940,17 +953,20 @@ const REV_PER_TH_BASE = 24.931 / 860 / 68000; // calibrated at $68k BTC
 const UPTIME          = 0.99;
 const MINERS = {
   // 1U form factor
-  s23:   { label:'S23 Hyd',        hash: 580, kw:5.510, cost:250000, form:'1U' }, // 9.5 J/TH
-  s21:   { label:'S21 Hyd',        hash: 480, kw:5.300, cost:150000, form:'1U' }, // 11.0 J/TH
-  s21p:  { label:'S21+ Hyd 358',   hash: 358, kw:5.370, cost:120000, form:'1U' }, // 15.0 J/TH — manual verified
-  s19:   { label:'S19 XP+ Hyd',    hash: 293, kw:5.567, cost: 32000, form:'1U' }, // 19.0 J/TH — manual verified
+  s23:   { label:'S23 Hyd · 580 TH/s · 9.5 J/TH',        hash: 580, kw:5.510, cost:250000, form:'1U' }, // 9.5 J/TH
+  s21:   { label:'S21 Hyd · 480 TH/s · 11.0 J/TH',        hash: 480, kw:5.300, cost:150000, form:'1U' }, // 11.0 J/TH
+  s21p:  { label:'S21+ Hyd 358 · 15.0 J/TH',   hash: 358, kw:5.370, cost:120000, form:'1U' }, // 15.0 J/TH — manual verified
+  s19:   { label:'S19 XP+ Hyd · 293 TH/s · 19.0 J/TH',    hash: 293, kw:5.567, cost: 32000, form:'1U' }, // 19.0 J/TH — manual verified
+  s21e:  { label:'S21e Hyd 332 · 17.0 J/TH',    hash: 332, kw:5.644, cost: 33211, form:'1U' }, // 17.0 J/TH — manual verified
+  // Air-cooled form factor
+  s19k:  { label:'S19K Pro Air · 120 TH/s · 23.0 J/TH',   hash: 120, kw:2.760, cost: 17000, form:'AIR' }, // 23.0 J/TH
   // 3U form factor
-  s23_3u:{ label:'S23 Hyd 3U',     hash:1160, kw:11.020, cost:450000, form:'3U' }, // 9.5 J/TH
-  s21e_3u:{label:'S21e XP Hyd 3U', hash: 860, kw:11.180, cost:230000, form:'3U' }, // 13.0 J/TH
-  s19_3u:{ label:'S19 XP Hyd 3U',  hash: 512, kw:10.600, cost: 60000, form:'3U' }, // 20.7 J/TH
+  s23_3u:{ label:'S23 Hyd 3U · 1160 TH/s · 9.5 J/TH',     hash:1160, kw:11.020, cost:450000, form:'3U' }, // 9.5 J/TH
+  s21e_3u:{label:'S21e XP Hyd 3U · 860 TH/s · 13.0 J/TH', hash: 860, kw:11.180, cost:230000, form:'3U' }, // 13.0 J/TH
+  s19_3u:{ label:'S19 XP Hyd 3U · 512 TH/s · 20.7 J/TH',  hash: 512, kw:10.600, cost: 60000, form:'3U' }, // 20.7 J/TH
 };
-let MINER_HASH = MINERS.s23.hash;
-let MINER_KW   = MINERS.s23.kw;
+let MINER_HASH = MINERS.s19.hash;
+let MINER_KW   = MINERS.s19.kw;
 const SOLAR_KWH_DAY   = 4000;   // usable solar kWh/day after warehouse load
 const SOLAR_HOURS_DAY = SOLAR_KWH_DAY / (1050 * 0.88); // effective hours at full AC
 // Profile: how many hours per day the fleet can run at full power from solar
@@ -1075,49 +1091,66 @@ function updateRange(el, valId, suffix) {
 // ── MAIN RECALC ──────────────────────────────────────────────────
 // Cooling system capex constants (landed, all-in)
 const ANTSPACE_HW5   = 2037542;  // R2,037,541.86 — Antspace HW5 landed (1U)
+const AIR_COOL_INFRA = 600000;   // R600k — air-cooled infrastructure (racks + standard cooling)  // R2,037,541.86 — Antspace HW5 landed (1U)
 const LIANLI_3U      = 1240000;  // ~R1.36M — Lian Li EXW $53,390 + freight + VAT landed JHB
 
-function toggleFormFactor() {
-  const is3U = document.getElementById('form3U').checked;
-  const sel  = document.getElementById('minerSelect');
+// ── COOLING MODE ─────────────────────────────────────────────────
+let coolingMode = 'hydro'; // 'hydro' | '3u' | 'air'
+
+function setCoolingMode(mode) {
+  coolingMode = mode;
+
+  // Update button styles
+  const modes = { hydro:'coolHydro', '3u':'cool3U', air:'coolAir' };
+  Object.entries(modes).forEach(([m, id]) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    const active = m === mode;
+    btn.style.background = active ? 'var(--gold)' : 'transparent';
+    btn.style.color       = active ? '#080b0f'      : 'var(--muted)';
+  });
+
+  // Sync legacy form3U checkbox
+  const cb = document.getElementById('form3U');
+  if (cb) cb.checked = (mode === '3u');
+
+  // Rebuild dropdown for the active cooling mode
+  const sel = document.getElementById('minerSelect');
   if (!sel) return;
 
-  // Rebuild dropdown
-  const opts = is3U
-    ? [
-        { value:'s23_3u',   label:'S23 Hyd 3U'      },
-        { value:'s21e_3u',  label:'S21e XP Hyd 3U'  },
-        { value:'s19_3u',   label:'S19 XP Hyd 3U'   },
-      ]
-    : [
-        { value:'s23',  label:'S23 Hyd'       },
-        { value:'s21',  label:'S21 Hyd'        },
-        { value:'s21p', label:'S21+ Hyd 358'   },
-        { value:'s19',  label:'S19 XP+ Hyd'    },
-      ];
-  sel.innerHTML = opts.map(o => `<option value="${o.value}">${o.label}</option>`).join('');
+  const opts = mode === '3u'
+    ? [ {v:'s23_3u', l:'S23 Hyd 3U · 1160 TH/s · 9.5 J/TH'}, {v:'s21e_3u', l:'S21e XP Hyd 3U · 860 TH/s · 13.0 J/TH'}, {v:'s19_3u', l:'S19 XP Hyd 3U · 512 TH/s · 20.7 J/TH'} ]
+    : mode === 'air'
+    ? [ {v:'s19k', l:'S19K Pro Air · 120 TH/s · 23.0 J/TH'} ]
+    : [ {v:'s23', l:'S23 Hyd · 580 TH/s · 9.5 J/TH'}, {v:'s21', l:'S21 Hyd · 480 TH/s · 11.0 J/TH'}, {v:'s21p', l:'S21+ Hyd 358 · 15.0 J/TH'}, {v:'s21e', l:'S21e Hyd 332 · 17.0 J/TH'}, {v:'s19', l:'S19 XP+ Hyd · 293 TH/s · 19.0 J/TH'} ];
 
-  // Snap infra slider to correct cooling system cost
-  const infraVal  = is3U ? LIANLI_3U : ANTSPACE_HW5;
+  sel.innerHTML = opts.map(o => `<option value="${o.v}">${o.l}</option>`).join('');
+
+  // Snap infrastructure slider
+  const infraVal = mode === '3u' ? LIANLI_3U : mode === 'air' ? AIR_COOL_INFRA : ANTSPACE_HW5;
   const infraSlider = document.getElementById('infraCapex');
   const infraDisp   = document.getElementById('infraCapexDisplay');
   const coolingNote = document.getElementById('coolingNote');
   if (infraSlider) {
     infraSlider.value = infraVal;
-    const pct = (infraVal - infraSlider.min) / (infraSlider.max - infraSlider.min) * 100;
-    infraSlider.style.setProperty('--pct', pct + '%');
+    infraSlider.style.setProperty('--pct', ((infraVal - +infraSlider.min) / (+infraSlider.max - +infraSlider.min) * 100) + '%');
   }
-  if (infraDisp && infraDisp.firstChild) {
-    infraDisp.firstChild.textContent = (infraVal/1e6).toFixed(2) + 'M ';
-  }
+  if (infraDisp && infraDisp.firstChild) infraDisp.firstChild.textContent = (infraVal/1e6).toFixed(2) + 'M ';
   if (coolingNote) {
-    coolingNote.textContent = is3U
+    coolingNote.textContent = mode === '3u'
       ? 'Lian Li 5-rack + CDU + dry cooler: R1.24M'
+      : mode === 'air'
+      ? 'Air-cooled racks + standard HVAC: R600k'
       : 'Antspace HW5 landed: R2.04M';
   }
 
-  // Apply first miner in new list
   applyMinerChoice(sel.value);
+}
+
+function toggleFormFactor() {
+  // Legacy — called by hidden checkbox; delegate to setCoolingMode
+  const cb = document.getElementById('form3U');
+  setCoolingMode(cb && cb.checked ? '3u' : 'hydro');
 }
 
 function applyMinerChoice(key) {
@@ -1289,7 +1322,7 @@ function buildIRRTable(btc, zar, btcG, diffG, opexMon, solarCap, battOn) {
 
   const allRows = Object.keys(MINERS).map(key => {
     const m         = MINERS[key];
-    const infraCap  = m.form === '3U' ? LIANLI_3U : ANTSPACE_HW5;
+    const infraCap  = m.form === '3U' ? LIANLI_3U : m.form === 'AIR' ? AIR_COOL_INFRA : ANTSPACE_HW5;
     const n         = zeroSpill(m.kw);
     const dailyKWh  = miningKWhDay(n, m.kw);
     const revPerKWh = m.hash * REV_PER_TH_BASE * btc * UPTIME / 24 * zar / m.kw;
@@ -1319,12 +1352,16 @@ function buildIRRTable(btc, zar, btcG, diffG, opexMon, solarCap, battOn) {
     const atWallPerMiner = +(m.kw + COOLING_OH / n).toFixed(2);
     const atWallFleet    = Math.round(n * m.kw + COOLING_OH);
 
+    // $ per TH = landed cost in USD (ZAR cost ÷ ZAR/USD rate)
+    const dollarPerTH = m.cost / zar / m.hash;
+
     return { key, m, n, fleetCap, capNoB, capWiB, annRevY1,
-             irrNoB, pbNoB, irrWiB, pbWiB, infraCap, atWallPerMiner, atWallFleet };
+             irrNoB, pbNoB, irrWiB, pbWiB, infraCap, atWallPerMiner, atWallFleet, dollarPerTH };
   });
 
-  const rows1U = allRows.filter(r => r.m.form === '1U').sort((a,b) => b.irrNoB - a.irrNoB);
-  const rows3U = allRows.filter(r => r.m.form === '3U').sort((a,b) => b.irrNoB - a.irrNoB);
+  const rows1U  = allRows.filter(r => r.m.form === '1U').sort((a,b) => b.irrNoB - a.irrNoB);
+  const rows3U  = allRows.filter(r => r.m.form === '3U').sort((a,b) => b.irrNoB - a.irrNoB);
+  const rowsAIR = allRows.filter(r => r.m.form === 'AIR').sort((a,b) => b.irrNoB - a.irrNoB);
 
   function irrCell(irr, isBest, pb) {
     const str   = isFinite(irr) ? (irr * 100).toFixed(1) + '%' : '>100%';
@@ -1345,6 +1382,7 @@ function buildIRRTable(btc, zar, btcG, diffG, opexMon, solarCap, battOn) {
       <td style="padding:7px 8px;text-align:center;color:var(--muted);font-size:10px">${r.m.form}</td>
       <td style="padding:7px 8px;text-align:right;color:var(--muted)">${r.m.hash.toLocaleString()}</td>
       <td style="padding:7px 8px;text-align:right;color:var(--muted)">${(r.m.kw/r.m.hash*1000).toFixed(1)}</td>
+      <td style="padding:7px 8px;text-align:right;font-family:var(--mono);color:var(--text);white-space:nowrap">$${r.dollarPerTH.toFixed(2)}</td>
       <td style="padding:7px 8px;text-align:right;color:var(--muted);white-space:nowrap">${r.n}&thinsp;&times;&thinsp;R${Math.round(r.m.cost/1000)}k</td>
       <td style="padding:7px 8px;text-align:right;font-family:var(--mono);color:var(--text);white-space:nowrap">${r.atWallPerMiner}&thinsp;kW<span style="font-size:9px;color:var(--muted);margin-left:3px">(${r.atWallFleet}kW)</span></td>
       <td style="padding:7px 8px;text-align:right;font-family:var(--mono);color:var(--muted);font-size:10px">R${(r.infraCap/1e6).toFixed(2)}M</td>
@@ -1358,12 +1396,13 @@ function buildIRRTable(btc, zar, btcG, diffG, opexMon, solarCap, battOn) {
   }
 
   function divRow(label, cost) {
-    return `<tr style="background:rgba(255,255,255,0.03)"><td colspan="15" style="padding:5px 10px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)">${label}<span style="color:var(--gold);margin-left:8px">${cost} hosting</span></td></tr>`;
+    return `<tr style="background:rgba(255,255,255,0.03)"><td colspan="16" style="padding:5px 10px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)">${label}<span style="color:var(--gold);margin-left:8px">${cost} hosting</span></td></tr>`;
   }
 
   tbody.innerHTML =
     divRow('1U &middot; Antspace HW5', 'R2.04M') + rows1U.map(makeRow).join('') +
-    divRow('3U &middot; Lian Li', 'R1.24M')      + rows3U.map(makeRow).join('');
+    divRow('3U &middot; Lian Li', 'R1.24M')      + rows3U.map(makeRow).join('') +
+    divRow('Air-cooled &middot; HVAC', 'R600k')  + rowsAIR.map(makeRow).join('');
 }
 
 // ── CASHFLOW CHART ───────────────────────────────────────────────
@@ -1891,8 +1930,8 @@ const FACTORY_DEFAULTS = {
   btcPrice:    '83000',
   zarRate:     '18.5',
   nMiners:     '61',
-  minerCost:   '250000',
-  minerModel:  's23',
+  minerCost:   '32000',
+  minerModel:  's19',
   form3U:      false,
   solarCapex:  '8500000',
   infraCapex:  '2037542',
@@ -2122,6 +2161,8 @@ function drawCapexBar(solarCap, infraCap, minerCost, n, battOn) {
     'seg_fleet':     `${n} × ${activeMiner.label} · ${activeMiner.kw.toFixed(3)} kW · ${(activeMiner.kw/activeMiner.hash*1000).toFixed(1)} J/TH · ${Math.round(n*activeMiner.kw)} ${_t('kwLoad','kW load')}`,
     'seg_infra':     is3U
       ? _t('note_infra3u','Lian Li 5-rack + CDU + dry cooler · R1.24M landed')
+      : coolingMode === 'air'
+      ? _t('note_infraAir','Air-cooled racks + HVAC · R600k')
       : _t('note_infra1u','Antspace HW5 · R2.04M landed · logistics + VAT included'),
     'seg_battery':   `${Math.round(BATT_CAPEX/4000)} kWh LFP · R4,000/${_t('kwhInstalled','kWh installed')}`,
   };
@@ -2320,7 +2361,8 @@ recalc();
 buildTOU('summer');
 loadSavedDefaults();
 startLiveFeed();
-applyLang('en'); // set initial language class + colours
+applyLang('en');
+setCoolingMode('hydro'); // initialise cooling toggle buttons
 
 }); // end DOMContentLoaded
 
@@ -2423,6 +2465,7 @@ const TRANSLATIONS = {
     note_bos:         'Mounting · cabling · civil · labour · commissioning',
     note_infra3u:     'Lian Li 5-rack + CDU + dry cooler · R1.24M landed',
     note_infra1u:     'Antspace HW5 · R2.04M landed · logistics + VAT included',
+    note_infraAir:    'Air-cooled racks + HVAC · R600k',
     kwLoad:           'kW load',
     kwhInstalled:     'kWh installed',
     // Header buttons
@@ -2580,6 +2623,7 @@ const TRANSLATIONS = {
     note_bos:         '安装 · 线缆 · 土建 · 人工 · 调试',
     note_infra3u:     '联力5机架 + CDU + 干式冷却器 · 到岸R1.24M',
     note_infra1u:     'Antspace HW5 · 到岸R2.04M · 含物流及增值税',
+    note_infraAir:    '风冷机架 + 暖通空调 · R60万',
     kwLoad:           '千瓦负载',
     kwhInstalled:     '度/已安装',
     // Header buttons
@@ -2730,6 +2774,7 @@ const TRANSLATIONS = {
     note_bos:         'Στήριξη · καλωδίωση · πολιτικά · εργασία · θέση σε λειτουργία',
     note_infra3u:     'Lian Li 5 ικριώματα + CDU + ξηρός ψύκτης · R1.24M παραδοτέο',
     note_infra1u:     'Antspace HW5 · R2.04M παραδοτέο · συμπ. logistics + ΦΠΑ',
+    note_infraAir:    'Αερόψυκτα ικριώματα + κλιματισμός · R600k',
     kwLoad:           'kW φορτίο',
     kwhInstalled:     'kWh εγκατεστημένο',
     // Header buttons
@@ -2788,9 +2833,9 @@ const TRANSLATIONS = {
 
 // IRR table column headers (built dynamically — translate via JS)
 const IRR_TABLE_HEADERS = {
-  en: ['Model','Form','TH/s','J/TH','Fleet','At Wall','Hosting','Capex','+Batt','Y1 Rev','No Battery · IRR / Payback','With Battery · IRR / Payback','Batt Δ'],
-  zh: ['型号','规格','算力(TH/s)','能效','机队','墙壁功率','托管费用','资本支出','+储能','第一年收入','无储能 · 收益率/回本','含储能 · 收益率/回本','储能增益'],
-  gr: ['Μοντέλο','Τύπος','TH/s','J/TH','Στόλος','Τοίχος kW','Φιλοξενία','Κεφάλαιο','+Μπαταρία','Έσοδα Ε1','Χωρίς Μπαταρία · ΕΒΑ / Αποπλ.','Με Μπαταρία · ΕΒΑ / Αποπλ.','Δ Μπαταρία'],
+  en: ['Model','Form','TH/s','J/TH','$/TH','Fleet','At Wall','Hosting','Capex','+Batt','Y1 Rev','No Battery · IRR / Payback','With Battery · IRR / Payback','Batt Δ'],
+  zh: ['型号','规格','算力(TH/s)','能效','$/TH','机队','墙壁功率','托管费用','资本支出','+储能','第一年收入','无储能 · 收益率/回本','含储能 · 收益率/回本','储能增益'],
+  gr: ['Μοντέλο','Τύπος','TH/s','J/TH','$/TH','Στόλος','Τοίχος kW','Φιλοξενία','Κεφάλαιο','+Μπαταρία','Έσοδα Ε1','Χωρίς Μπαταρία · ΕΒΑ / Αποπλ.','Με Μπαταρία · ΕΒΑ / Αποπλ.','Δ Μπαταρία'],
 };
 
 function applyLang(lang) {
