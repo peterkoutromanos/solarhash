@@ -870,6 +870,7 @@ body.lang-gr [data-i18n] { color: #4db8ff; }
           <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase" data-i18n="colCapex">Capex</th>
           <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase data-i18n="colBatt">+Batt</th>
           <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase" data-i18n="colY1Rev">Y1 Rev</th>
+          <th style="text-align:right;padding:6px 8px;color:var(--text);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase" data-i18n="colRkwh">R/kWh</th>
           <th colspan="2" style="text-align:center;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase;border-left:1px solid var(--border)">No Battery · IRR / Payback</th>
           <th colspan="2" style="text-align:center;padding:6px 8px;color:var(--blue);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase;border-left:1px solid var(--border)">With Battery · IRR / Payback</th>
           <th style="text-align:right;padding:6px 8px;color:var(--muted);font-weight:400;letter-spacing:1px;font-size:9px;text-transform:uppercase">Batt&thinsp;&Delta;</th>
@@ -1356,7 +1357,7 @@ function buildIRRTable(btc, zar, btcG, diffG, opexMon, solarCap, battOn) {
     const dollarPerTH = m.cost / zar / m.hash;
 
     return { key, m, n, fleetCap, capNoB, capWiB, annRevY1,
-             irrNoB, pbNoB, irrWiB, pbWiB, infraCap, atWallPerMiner, atWallFleet, dollarPerTH };
+             irrNoB, pbNoB, irrWiB, pbWiB, infraCap, atWallPerMiner, atWallFleet, dollarPerTH, revPerKWh };
   });
 
   const rows1U  = allRows.filter(r => r.m.form === '1U').sort((a,b) => b.irrNoB - a.irrNoB);
@@ -1389,6 +1390,7 @@ function buildIRRTable(btc, zar, btcG, diffG, opexMon, solarCap, battOn) {
       <td style="padding:7px 8px;text-align:right;font-family:var(--mono);color:var(--text)">R${(r.capNoB/1e6).toFixed(2)}M</td>
       <td style="padding:7px 8px;text-align:right;font-family:var(--mono);color:var(--text)">R${(r.capWiB/1e6).toFixed(2)}M</td>
       <td style="padding:7px 8px;text-align:right;font-family:var(--mono);color:var(--gold)">R${Math.round(r.annRevY1/1000)}k</td>
+      <td style="padding:7px 8px;text-align:right;font-family:var(--mono);color:var(--text)">R${r.revPerKWh.toFixed(2)}</td>
       ${irrCell(r.irrNoB, r.key === bestNoB.key, r.pbNoB)}
       ${irrCell(r.irrWiB, r.key === bestWiB.key, r.pbWiB)}
       <td style="padding:7px 8px;text-align:right;font-family:var(--mono);font-size:10px;color:${deltaColor}">${deltaStr}</td>
@@ -1396,7 +1398,7 @@ function buildIRRTable(btc, zar, btcG, diffG, opexMon, solarCap, battOn) {
   }
 
   function divRow(label, cost) {
-    return `<tr style="background:rgba(255,255,255,0.03)"><td colspan="16" style="padding:5px 10px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)">${label}<span style="color:var(--gold);margin-left:8px">${cost} hosting</span></td></tr>`;
+    return `<tr style="background:rgba(255,255,255,0.03)"><td colspan="17" style="padding:5px 10px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)">${label}<span style="color:var(--gold);margin-left:8px">${cost} hosting</span></td></tr>`;
   }
 
   tbody.innerHTML =
@@ -2517,6 +2519,7 @@ const TRANSLATIONS = {
     colCapex:         'Capex',
     colBatt:          '+Batt',
     colY1Rev:         'Y1 Rev',
+    colRkwh:          'R/kWh',
     // TOU rate cards
     touPeak:          'Peak',
     touStandard:      'Standard',
@@ -2667,6 +2670,7 @@ const TRANSLATIONS = {
     colCapex:         '资本支出',
     colBatt:          '+储能',
     colY1Rev:         '第一年收入',
+    colRkwh:          '兰特/度',
     // TOU rate cards
     touPeak:          '峰时',
     touStandard:      '平时',
@@ -2818,6 +2822,7 @@ const TRANSLATIONS = {
     colCapex:         'Κεφάλαιο',
     colBatt:          '+Μπαταρία',
     colY1Rev:         'Έσοδα Ε1',
+    colRkwh:          'R/kWh',
     // TOU rate cards
     touPeak:          'Αιχμή',
     touStandard:      'Κανονική',
@@ -2833,7 +2838,7 @@ const TRANSLATIONS = {
 
 // IRR table column headers (built dynamically — translate via JS)
 const IRR_TABLE_HEADERS = {
-  en: ['Model','Form','TH/s','J/TH','$/TH','Fleet','At Wall','Hosting','Capex','+Batt','Y1 Rev','No Battery · IRR / Payback','With Battery · IRR / Payback','Batt Δ'],
+  en: ['Model','Form','TH/s','J/TH','$/TH','Fleet','At Wall','Hosting','Capex','+Batt','Y1 Rev','R/kWh','No Battery · IRR / Payback','With Battery · IRR / Payback','Batt Δ'],
   zh: ['型号','规格','算力(TH/s)','能效','$/TH','机队','墙壁功率','托管费用','资本支出','+储能','第一年收入','无储能 · 收益率/回本','含储能 · 收益率/回本','储能增益'],
   gr: ['Μοντέλο','Τύπος','TH/s','J/TH','$/TH','Στόλος','Τοίχος kW','Φιλοξενία','Κεφάλαιο','+Μπαταρία','Έσοδα Ε1','Χωρίς Μπαταρία · ΕΒΑ / Αποπλ.','Με Μπαταρία · ΕΒΑ / Αποπλ.','Δ Μπαταρία'],
 };
